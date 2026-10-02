@@ -87,44 +87,46 @@
             color: white;
         }
 
-        /* Typography */
+        /* Typography - ENLARGED FOR PRESENTATION */
         h1 {
-            font-size: 3.5em;
-            margin-bottom: 30px;
+            font-size: 4.5em;
+            margin-bottom: 40px;
             font-weight: 800;
             letter-spacing: -1px;
+            line-height: 1.2;
         }
 
         h2 {
-            font-size: 2.8em;
-            margin-bottom: 40px;
+            font-size: 3.8em;
+            margin-bottom: 50px;
             font-weight: 700;
             letter-spacing: -0.5px;
+            line-height: 1.2;
         }
 
         h3 {
-            font-size: 1.8em;
-            margin-bottom: 20px;
+            font-size: 2.4em;
+            margin-bottom: 30px;
             font-weight: 600;
         }
 
         p {
-            font-size: 1.3em;
+            font-size: 1.8em;
             line-height: 1.8;
-            margin-bottom: 20px;
-            max-width: 900px;
+            margin-bottom: 25px;
+            max-width: 1000px;
         }
 
         .subtitle {
-            font-size: 1.6em;
+            font-size: 2.2em;
             opacity: 0.95;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             font-weight: 300;
         }
 
         /* Layout helpers */
         .slide-content {
-            max-width: 1000px;
+            max-width: 1200px;
             width: 100%;
             text-align: center;
         }
@@ -136,10 +138,10 @@
         .two-column {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            gap: 60px;
             align-items: center;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1400px;
         }
 
         .column-text {
@@ -154,8 +156,8 @@
 
         /* Visual Elements */
         .illustration {
-            font-size: 120px;
-            margin: 30px 0;
+            font-size: 150px;
+            margin: 40px 0;
             animation: float 3s ease-in-out infinite;
         }
 
@@ -165,31 +167,32 @@
         }
 
         .icon {
-            font-size: 80px;
+            font-size: 100px;
             display: inline-block;
-            margin: 0 15px;
+            margin: 0 20px;
         }
 
         .flow-diagram {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px;
+            gap: 25px;
             flex-wrap: wrap;
-            margin: 40px 0;
+            margin: 50px 0;
         }
 
         .flow-box {
             background: rgba(255, 255, 255, 0.2);
-            padding: 20px 30px;
-            border-radius: 10px;
+            padding: 30px 45px;
+            border-radius: 15px;
             font-weight: 600;
-            min-width: 120px;
+            min-width: 180px;
             text-align: center;
+            font-size: 1.4em;
         }
 
         .flow-arrow {
-            font-size: 2em;
+            font-size: 2.5em;
             animation: pulse 1.5s ease-in-out infinite;
         }
 
@@ -201,22 +204,26 @@
         /* Cards */
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
             width: 100%;
-            margin: 30px 0;
+            margin: 40px 0;
         }
 
         .card {
             background: rgba(255, 255, 255, 0.15);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 25px;
-            border-radius: 15px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            padding: 35px;
+            border-radius: 20px;
             text-align: center;
             backdrop-filter: blur(10px);
             cursor: pointer;
             transition: all 0.3s;
             color: white;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .card:hover {
@@ -236,14 +243,15 @@
         }
 
         .card-title {
-            font-size: 1.3em;
+            font-size: 1.6em;
             font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .card-content {
-            font-size: 1em;
+            font-size: 1.3em;
             opacity: 0.95;
+            line-height: 1.6;
         }
 
         /* Timeline */
@@ -254,19 +262,20 @@
 
         .timeline-item-slide {
             display: flex;
-            margin: 20px 0;
-            gap: 20px;
+            margin: 30px 0;
+            gap: 30px;
             align-items: flex-start;
         }
 
         .timeline-year-badge {
             background: rgba(255, 255, 255, 0.25);
-            padding: 12px 20px;
+            padding: 18px 30px;
             border-radius: 50px;
             font-weight: 700;
-            min-width: 80px;
+            min-width: 120px;
             text-align: center;
             flex-shrink: 0;
+            font-size: 1.4em;
         }
 
         .timeline-text {
@@ -276,43 +285,49 @@
 
         .timeline-title {
             font-weight: 700;
-            margin-bottom: 5px;
-            font-size: 1.1em;
+            margin-bottom: 10px;
+            font-size: 1.5em;
         }
 
         .timeline-description {
             opacity: 0.9;
-            font-size: 0.95em;
+            font-size: 1.2em;
         }
 
         /* Quiz */
         .quiz-question {
-            font-size: 1.5em;
+            font-size: 2.2em;
             font-weight: 600;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             text-align: center;
+            line-height: 1.4;
         }
 
         .options-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            max-width: 800px;
-            margin: 0 auto 30px;
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto 40px;
             width: 100%;
         }
 
         .quiz-option {
-            padding: 25px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 12px;
+            padding: 35px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
             cursor: pointer;
             background: rgba(255, 255, 255, 0.1);
             transition: all 0.3s;
             color: white;
-            font-size: 1.1em;
+            font-size: 1.4em;
             font-weight: 500;
             text-align: center;
+            line-height: 1.5;
+            min-height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .quiz-option:hover {
@@ -340,9 +355,9 @@
         }
 
         .quiz-feedback {
-            font-size: 1.2em;
+            font-size: 1.6em;
             font-weight: 600;
-            margin-top: 20px;
+            margin-top: 30px;
             opacity: 0;
             animation: fadeIn 0.5s ease forwards;
         }
@@ -355,19 +370,19 @@
         /* Key Points */
         .highlight-section {
             background: rgba(255, 255, 255, 0.15);
-            padding: 30px;
-            border-radius: 15px;
-            border-left: 6px solid rgba(255, 255, 255, 0.5);
-            margin: 30px 0;
+            padding: 40px;
+            border-radius: 20px;
+            border-left: 8px solid rgba(255, 255, 255, 0.5);
+            margin: 40px 0;
             text-align: left;
-            max-width: 900px;
+            max-width: 1100px;
             backdrop-filter: blur(10px);
         }
 
         .highlight-title {
             font-weight: 700;
-            font-size: 1.2em;
-            margin-bottom: 15px;
+            font-size: 1.6em;
+            margin-bottom: 25px;
         }
 
         .highlight-list {
@@ -376,10 +391,11 @@
         }
 
         .highlight-list li {
-            margin: 12px 0;
-            padding-left: 30px;
+            margin: 18px 0;
+            padding-left: 40px;
             position: relative;
-            font-size: 1.1em;
+            font-size: 1.4em;
+            line-height: 1.6;
         }
 
         .highlight-list li::before {
@@ -388,29 +404,30 @@
             left: 0;
             font-weight: bold;
             opacity: 0.8;
+            font-size: 1.2em;
         }
 
         /* Controls */
         .controls {
             position: fixed;
-            bottom: 40px;
+            bottom: 50px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 15px;
+            gap: 25px;
             z-index: 1000;
             align-items: center;
         }
 
         .control-btn {
             background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 3px solid rgba(255, 255, 255, 0.3);
             color: white;
-            width: 50px;
-            height: 50px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.5em;
+            font-size: 2em;
             transition: all 0.3s;
             display: flex;
             align-items: center;
@@ -430,12 +447,13 @@
 
         .slide-counter {
             background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 3px solid rgba(255, 255, 255, 0.3);
             color: white;
-            padding: 10px 20px;
+            padding: 15px 30px;
             border-radius: 50px;
             font-weight: 600;
             backdrop-filter: blur(10px);
+            font-size: 1.5em;
         }
 
         /* Progress bar */
@@ -443,7 +461,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            height: 4px;
+            height: 6px;
             background: rgba(255, 255, 255, 0.1);
             width: 100%;
             z-index: 999;
@@ -459,14 +477,15 @@
         /* Keyboard hints */
         .keyboard-hint {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            font-size: 0.9em;
-            color: rgba(255, 255, 255, 0.6);
-            background: rgba(0, 0, 0, 0.2);
-            padding: 10px 15px;
-            border-radius: 20px;
+            top: 30px;
+            right: 30px;
+            font-size: 1.3em;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 25px;
+            border-radius: 30px;
             z-index: 1000;
+            font-weight: 500;
         }
 
         /* Responsive */
@@ -524,8 +543,8 @@
             <div class="illustration">🤖</div>
             <h1>What AI Is</h1>
             <p class="subtitle">Where It Came From, and What It Does Today</p>
-            <p style="margin-top: 60px; font-size: 1.2em; opacity: 0.9;">Unit 0: An Interactive Journey Into Artificial Intelligence</p>
-            <div style="margin-top: 80px; font-size: 1em; opacity: 0.8;">
+            <p style="margin-top: 80px; font-size: 1.6em; opacity: 0.9;">Unit 0: An Interactive Journey Into Artificial Intelligence</p>
+            <div style="margin-top: 100px; font-size: 1.4em; opacity: 0.8;">
                 <p>← Use arrow keys or click buttons to navigate →</p>
             </div>
         </div>
@@ -541,8 +560,8 @@
                 </div>
                 <div class="column-text">
                     <p>Open a navigation app. Type a destination. A route appears in seconds.</p>
-                    <p>It accounts for <strong>traffic</strong>, <strong>road closures</strong>, and the <strong>way you drive</strong>.</p>
-                    <p style="font-size: 1.4em; color: #667eea; font-weight: 700; margin-top: 30px;">That's AI, running several kinds at once.</p>
+                    <p>It accounts for <strong style="color: #667eea;">traffic</strong>, <strong style="color: #667eea;">road closures</strong>, and the <strong style="color: #667eea;">way you drive</strong>.</p>
+                    <p style="font-size: 2em; color: #667eea; font-weight: 700; margin-top: 40px;">That's AI, running several kinds at once.</p>
                 </div>
             </div>
         </div>
@@ -554,11 +573,11 @@
             <h2>What's Happening Under the Hood?</h2>
             <div class="highlight-section">
                 <ul class="highlight-list" style="color: #333;">
-                    <li><strong>Collecting</strong> speed reports from thousands of phones on the road</li>
-                    <li><strong>Building</strong> a live traffic picture in real time</li>
-                    <li><strong>Running</strong> an algorithm to compare possible routes</li>
-                    <li><strong>Predicting</strong> the fastest route based on patterns</li>
-                    <li><strong>Learning</strong> your habits to suggest your usual route</li>
+                    <li><strong style="color: #667eea;">Collecting</strong> speed reports from thousands of phones on the road</li>
+                    <li><strong style="color: #667eea;">Building</strong> a live traffic picture in real time</li>
+                    <li><strong style="color: #667eea;">Running</strong> an algorithm to compare possible routes</li>
+                    <li><strong style="color: #667eea;">Predicting</strong> the fastest route based on patterns</li>
+                    <li><strong style="color: #667eea;">Learning</strong> your habits to suggest your usual route</li>
                 </ul>
             </div>
             <p style="margin-top: 40px; color: #666;">You've watched it reroute you around a crash. You've seen it get the arrival time wrong. This unit gives you the vocabulary to explain what's happening.</p>
@@ -584,7 +603,7 @@
                         <div class="card-title">What decision does it make?</div>
                     </div>
                 </div>
-                <p style="color: #666; margin-top: 40px;">Keep these three questions in mind for every system you meet in this guide. You'll use them to analyze AI in the real world.</p>
+                <p style="color: #666; margin-top: 40px; font-size: 1.5em;">Keep these three questions in mind for every system you meet in this guide. You'll use them to analyze AI in the real world.</p>
             </div>
         </div>
     </div>
@@ -617,22 +636,22 @@
         <div class="slide-content">
             <h2>Understanding the Hierarchy</h2>
             <div class="flow-diagram" style="margin: 60px 0; flex-direction: column;">
-                <div class="flow-box" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; min-width: 300px;">
+                <div class="flow-box" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; min-width: 350px; font-size: 1.5em;">
                     <strong>Artificial Intelligence (AI)</strong>
-                    <div style="font-size: 0.9em; margin-top: 10px; opacity: 0.9;">Any system that does work we associate with human thinking</div>
+                    <div style="font-size: 1em; margin-top: 15px; opacity: 0.9; line-height: 1.4;">Any system that does work we associate with human thinking</div>
                 </div>
                 <div class="flow-arrow" style="color: white;">↓</div>
-                <div class="flow-box" style="background: linear-gradient(135deg, #f093fb, #f5576c); color: white; min-width: 300px;">
+                <div class="flow-box" style="background: linear-gradient(135deg, #f093fb, #f5576c); color: white; min-width: 350px; font-size: 1.5em;">
                     <strong>Machine Learning (ML)</strong>
-                    <div style="font-size: 0.9em; margin-top: 10px; opacity: 0.9;">Systems that learn patterns from data</div>
+                    <div style="font-size: 1em; margin-top: 15px; opacity: 0.9; line-height: 1.4;">Systems that learn patterns from data</div>
                 </div>
                 <div class="flow-arrow" style="color: white;">↓</div>
-                <div class="flow-box" style="background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; min-width: 300px;">
+                <div class="flow-box" style="background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; min-width: 350px; font-size: 1.5em;">
                     <strong>Deep Learning</strong>
-                    <div style="font-size: 0.9em; margin-top: 10px; opacity: 0.9;">Neural networks with many layers</div>
+                    <div style="font-size: 1em; margin-top: 15px; opacity: 0.9; line-height: 1.4;">Neural networks with many layers</div>
                 </div>
             </div>
-            <p style="color: #666; margin-top: 40px; text-align: center;"><strong>Every deep learning system is ML. Every ML system is AI. But not all AI is ML.</strong></p>
+            <p style="color: #666; margin-top: 40px; text-align: center; font-size: 1.5em;"><strong>Every deep learning system is ML. Every ML system is AI. But not all AI is ML.</strong></p>
         </div>
     </div>
 
@@ -660,9 +679,9 @@
             <div class="highlight-section" style="margin-top: 40px;">
                 <div class="highlight-title">Example: How a Spam Filter Works</div>
                 <ul class="highlight-list" style="color: #333;">
-                    <li><strong>Training Data:</strong> Thousands of emails marked spam or not spam</li>
-                    <li><strong>Algorithm:</strong> Finds patterns like phrases, links, unknown senders</li>
-                    <li><strong>Model:</strong> Scores new emails and decides where they go</li>
+                    <li><strong style="color: #667eea;">Training Data:</strong> Thousands of emails marked spam or not spam</li>
+                    <li><strong style="color: #667eea;">Algorithm:</strong> Finds patterns like phrases, links, unknown senders</li>
+                    <li><strong style="color: #667eea;">Model:</strong> Scores new emails and decides where they go</li>
                 </ul>
             </div>
         </div>
@@ -767,7 +786,7 @@
     <div class="slide timeline-slide">
         <div class="slide-content">
             <h2>AI Through the Decades</h2>
-            <div style="text-align: left; max-width: 900px; margin: 50px auto;">
+            <div style="text-align: left; max-width: 1100px; margin: 50px auto;">
                 <div class="timeline-item-slide">
                     <div class="timeline-year-badge">1950</div>
                     <div class="timeline-text">
@@ -807,7 +826,7 @@
     <div class="slide timeline-slide">
         <div class="slide-content">
             <h2>AI Through the Decades (Continued)</h2>
-            <div style="text-align: left; max-width: 900px; margin: 50px auto;">
+            <div style="text-align: left; max-width: 1100px; margin: 50px auto;">
                 <div class="timeline-item-slide">
                     <div class="timeline-year-badge">1980s</div>
                     <div class="timeline-text">
@@ -839,7 +858,7 @@
     <div class="slide timeline-slide">
         <div class="slide-content">
             <h2>The Modern AI Era</h2>
-            <div style="text-align: left; max-width: 900px; margin: 50px auto;">
+            <div style="text-align: left; max-width: 1100px; margin: 50px auto;">
                 <div class="timeline-item-slide">
                     <div class="timeline-year-badge">2012</div>
                     <div class="timeline-text">
@@ -881,21 +900,21 @@
             <h2>What Changed?</h2>
             <div class="two-column" style="margin-top: 60px;">
                 <div style="text-align: center;">
-                    <div style="font-size: 3em; margin-bottom: 20px;">❌</div>
-                    <h3 style="color: #666;">Early AI</h3>
-                    <p style="color: #666;">Write intelligence down as rules</p>
-                    <p style="color: #999; font-size: 0.95em;">Breaks when cases don't match rules</p>
+                    <div style="font-size: 3.5em; margin-bottom: 30px;">❌</div>
+                    <h3 style="color: #666; font-size: 2em;">Early AI</h3>
+                    <p style="color: #666; font-size: 1.5em;">Write intelligence down as rules</p>
+                    <p style="color: #999; font-size: 1.3em; line-height: 1.5;">Breaks when cases don't match rules</p>
                 </div>
                 <div style="text-align: center;">
-                    <div style="font-size: 3em; margin-bottom: 20px;">✅</div>
-                    <h3 style="color: #667eea;">Modern AI</h3>
-                    <p style="color: #667eea;"><strong>Learn from data</strong></p>
-                    <p style="color: #999; font-size: 0.95em;">Adapts to new patterns</p>
+                    <div style="font-size: 3.5em; margin-bottom: 30px;">✅</div>
+                    <h3 style="color: #667eea; font-size: 2em;">Modern AI</h3>
+                    <p style="color: #667eea; font-size: 1.5em;"><strong>Learn from data</strong></p>
+                    <p style="color: #999; font-size: 1.3em; line-height: 1.5;">Adapts to new patterns</p>
                 </div>
             </div>
             <div class="highlight-section" style="margin-top: 60px; text-align: center;">
                 <div class="highlight-title">Why Now?</div>
-                <p style="color: #333;">This shift only worked once computers got <strong>fast enough</strong> and data got <strong>big enough</strong>.</p>
+                <p style="color: #333; font-size: 1.5em;">This shift only worked once computers got <strong style="color: #667eea;">fast enough</strong> and data got <strong style="color: #667eea;">big enough</strong>.</p>
             </div>
         </div>
     </div>
@@ -929,10 +948,10 @@
             <h2>Narrow AI vs General AI</h2>
             <div class="two-column" style="margin-top: 60px;">
                 <div style="text-align: center;">
-                    <div style="font-size: 3em; margin-bottom: 20px;">🎯</div>
-                    <h3 style="color: #667eea;">Narrow AI</h3>
-                    <p style="color: #333;"><strong>Every AI today</strong></p>
-                    <ul style="text-align: left; color: #666; margin: 20px 0;">
+                    <div style="font-size: 3.5em; margin-bottom: 30px;">🎯</div>
+                    <h3 style="color: #667eea; font-size: 2em;">Narrow AI</h3>
+                    <p style="color: #333; font-size: 1.5em;"><strong>Every AI today</strong></p>
+                    <ul style="text-align: left; color: #666; margin: 30px 0; font-size: 1.3em; line-height: 1.6;">
                         <li>✓ Built for specific tasks</li>
                         <li>✓ Excellent at one thing</li>
                         <li>✗ Useless outside that boundary</li>
@@ -940,10 +959,10 @@
                     </ul>
                 </div>
                 <div style="text-align: center;">
-                    <div style="font-size: 3em; margin-bottom: 20px; opacity: 0.5;">❓</div>
-                    <h3 style="color: #999;">General AI</h3>
-                    <p style="color: #999;"><strong>Doesn't exist yet</strong></p>
-                    <ul style="text-align: left; color: #999; margin: 20px 0;">
+                    <div style="font-size: 3.5em; margin-bottom: 30px; opacity: 0.5;">❓</div>
+                    <h3 style="color: #999; font-size: 2em;">General AI</h3>
+                    <p style="color: #999; font-size: 1.5em;"><strong>Doesn't exist yet</strong></p>
+                    <ul style="text-align: left; color: #999; margin: 30px 0; font-size: 1.3em; line-height: 1.6;">
                         <li>→ Would learn across any field</li>
                         <li>→ Could handle any intellectual task</li>
                         <li>→ Would think like humans do</li>
@@ -958,18 +977,18 @@
     <div class="slide content-slide">
         <div class="slide-content">
             <h2>The GenAI Plot Twist</h2>
-            <p style="font-size: 1.4em; margin-bottom: 40px; color: #667eea;"><strong>ChatGPT can write emails, explain taxes, debug code...</strong></p>
-            <p style="font-size: 1.2em; margin-bottom: 30px; color: #666;">Looks general, right? Not quite.</p>
+            <p style="font-size: 1.8em; margin-bottom: 40px; color: #667eea;"><strong>ChatGPT can write emails, explain taxes, debug code...</strong></p>
+            <p style="font-size: 1.5em; margin-bottom: 30px; color: #666;">Looks general, right? Not quite.</p>
             <div class="highlight-section">
                 <div class="highlight-title">GenAI Still Fails in Human Ways</div>
                 <ul class="highlight-list" style="color: #333;">
-                    <li><strong>Invents sources</strong> that don't exist</li>
-                    <li><strong>Forgets</strong> simple facts within a conversation</li>
-                    <li><strong>Can't verify</strong> its work against reality</li>
-                    <li><strong>Doesn't know</strong> when it's wrong</li>
+                    <li><strong style="color: #667eea;">Invents sources</strong> that don't exist</li>
+                    <li><strong style="color: #667eea;">Forgets</strong> simple facts within a conversation</li>
+                    <li><strong style="color: #667eea;">Can't verify</strong> its work against reality</li>
+                    <li><strong style="color: #667eea;">Doesn't know</strong> when it's wrong</li>
                 </ul>
             </div>
-            <p style="margin-top: 40px; color: #667eea; font-size: 1.2em; font-weight: 600;">Breadth ≠ General Intelligence</p>
+            <p style="margin-top: 40px; color: #667eea; font-size: 1.6em; font-weight: 600;">Breadth ≠ General Intelligence</p>
         </div>
     </div>
 
@@ -1000,7 +1019,7 @@
     <div class="slide content-slide">
         <div class="slide-content">
             <h2>AI Technologies Today</h2>
-            <p style="color: #666; margin-bottom: 40px;">Three drivers: <strong>Faster hardware</strong>, <strong>Better algorithms</strong>, <strong>More data</strong></p>
+            <p style="color: #666; margin-bottom: 40px; font-size: 1.5em;">Three drivers: <strong>Faster hardware</strong>, <strong>Better algorithms</strong>, <strong>More data</strong></p>
             <div class="card-grid" style="margin-top: 40px;">
                 <div class="card card-dark">
                     <div class="icon">💬</div>
@@ -1046,7 +1065,7 @@
                     <li>AI is a broad field: symbolic rules, machine learning, and deep learning</li>
                     <li>Modern AI learns from data, not hand-written rules</li>
                     <li>History shows cycles: hype → failure → new approach → breakthrough</li>
-                    <li>All today's AI is <strong>narrow</strong>—excellent at one task, useless outside it</li>
+                    <li>All today's AI is <strong style="color: #667eea;">narrow</strong>—excellent at one task, useless outside it</li>
                     <li>GenAI looks general but still fails in ways humans wouldn't</li>
                 </ul>
             </div>
@@ -1071,7 +1090,7 @@
                     <div class="card-title">What decision does it make?</div>
                 </div>
             </div>
-            <p style="color: #666; font-size: 1.2em; text-align: center;"><strong>Use these to analyze every AI system you encounter.</strong></p>
+            <p style="color: #666; font-size: 1.5em; text-align: center;"><strong>Use these to analyze every AI system you encounter.</strong></p>
         </div>
     </div>
 
@@ -1081,25 +1100,25 @@
             <h2>Your Next Step: Discussion 0</h2>
             <div class="highlight-section" style="background: rgba(255, 255, 255, 0.2); margin-top: 50px;">
                 <div class="highlight-title">Find an article about AI and analyze it:</div>
-                <ul class="highlight-list" style="color: white; margin-top: 20px;">
+                <ul class="highlight-list" style="color: white; margin-top: 20px; font-size: 1.3em;">
                     <li><strong>What kind of AI?</strong> Symbolic, ML, or deep learning?</li>
                     <li><strong>What did it learn from?</strong> What's the training data?</li>
                     <li><strong>Narrow or general?</strong> Does the article hype it up?</li>
                     <li><strong>Apply the three questions.</strong> Patterns, training, decision?</li>
                 </ul>
             </div>
-            <p style="margin-top: 50px; font-size: 1.3em; font-weight: 600;">Come to class Tuesday ready to explain in 2 minutes.</p>
+            <p style="margin-top: 50px; font-size: 1.8em; font-weight: 600;">Come to class Tuesday ready to explain in 2 minutes.</p>
         </div>
     </div>
 
     <!-- SLIDE 24: Closing Slide -->
     <div class="slide conclusion-slide">
         <div class="slide-content">
-            <div class="illustration" style="font-size: 150px;">🌟</div>
+            <div class="illustration" style="font-size: 180px;">🌟</div>
             <h1 style="margin-top: 40px;">You Now Speak AI</h1>
-            <p class="subtitle" style="font-size: 1.4em; margin-top: 30px;">You have the vocabulary to explain what's happening in the AI systems you use every day.</p>
-            <p style="margin-top: 50px; font-size: 1.2em; opacity: 0.95;">Ready to dive deeper in Unit 1? Let's test the limits of what these systems can do.</p>
-            <div style="margin-top: 80px; font-size: 1em; opacity: 0.8;">
+            <p class="subtitle" style="font-size: 1.8em; margin-top: 30px;">You have the vocabulary to explain what's happening in the AI systems you use every day.</p>
+            <p style="margin-top: 50px; font-size: 1.6em; opacity: 0.95;">Ready to dive deeper in Unit 1? Let's test the limits of what these systems can do.</p>
+            <div style="margin-top: 100px; font-size: 1.4em; opacity: 0.9;">
                 <p>🎉 Great job completing Unit 0!</p>
             </div>
         </div>
