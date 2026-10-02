@@ -5,1207 +5,922 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unit 0: What AI Is | Interactive Slide Deck</title>
     <style>
-        * {
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body {
+            width: 100%;
+            height: 100%;
             margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0d1b2f;
+            color: #0f172a;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #1a1a2e;
-            overflow: hidden;
-        }
-
-        .slide-container {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: block;
         }
 
         .slide {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 60px;
-            opacity: 0;
-            transform: translateX(100%);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            overflow-y: auto;
+            inset: 0;
+            display: none;
+            width: 100vw;
+            height: 100vh;
+            padding: 72px 80px 92px;
+            overflow: hidden;
+            background: #0d1b2f;
+            transition: opacity 0.35s ease, transform 0.35s ease;
         }
 
         .slide.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             opacity: 1;
             transform: translateX(0);
-            z-index: 10;
+            z-index: 2;
         }
 
         .slide.prev {
-            transform: translateX(-100%);
+            transform: translateX(-8%);
         }
 
-        /* Slide backgrounds */
-        .slide.title-slide {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-align: center;
-        }
-
-        .slide.content-slide {
-            background: white;
-            color: #333;
-            padding: 80px 60px;
-        }
-
-        .slide.timeline-slide {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-        }
-
-        .slide.quiz-slide {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-        }
-
-        .slide.discussion-slide {
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-            color: white;
-        }
-
-        .slide.conclusion-slide {
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-            color: white;
-        }
-
-        /* Typography - ENLARGED FOR PRESENTATION */
-        h1 {
-            font-size: 4.5em;
-            margin-bottom: 40px;
-            font-weight: 800;
-            letter-spacing: -1px;
-            line-height: 1.2;
-        }
-
-        h2 {
-            font-size: 3.8em;
-            margin-bottom: 50px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            line-height: 1.2;
-        }
-
-        h3 {
-            font-size: 2.4em;
-            margin-bottom: 30px;
-            font-weight: 600;
-        }
-
-        p {
-            font-size: 1.8em;
-            line-height: 1.8;
-            margin-bottom: 25px;
-            max-width: 1000px;
-        }
-
-        .subtitle {
-            font-size: 2.2em;
-            opacity: 0.95;
-            margin-bottom: 30px;
-            font-weight: 300;
-        }
-
-        /* Layout helpers */
         .slide-content {
-            max-width: 1200px;
-            width: 100%;
-            text-align: center;
-        }
-
-        .slide-content.left-align {
-            text-align: left;
-        }
-
-        .two-column {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-            width: 100%;
-            max-width: 1400px;
-        }
-
-        .column-text {
-            text-align: left;
-        }
-
-        .column-visual {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Visual Elements */
-        .illustration {
-            font-size: 150px;
-            margin: 40px 0;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .icon {
-            font-size: 100px;
-            display: inline-block;
-            margin: 0 20px;
-        }
-
-        .flow-diagram {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
-            margin: 50px 0;
-        }
-
-        .flow-box {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 30px 45px;
-            border-radius: 15px;
-            font-weight: 600;
-            min-width: 180px;
-            text-align: center;
-            font-size: 1.4em;
-        }
-
-        .flow-arrow {
-            font-size: 2.5em;
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-
-        /* Cards */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            width: 100%;
-            margin: 40px 0;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.15);
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            padding: 35px;
-            border-radius: 20px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            cursor: pointer;
-            transition: all 0.3s;
-            color: white;
-            min-height: 280px;
+            width: min(1300px, 92vw);
+            max-height: calc(100vh - 170px);
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
-        .card:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-10px);
-            border-color: rgba(255, 255, 255, 0.5);
+        .slide-content.left-align { text-align: left; }
+
+        .title-slide { background: linear-gradient(135deg, #8fd4ff 0%, #7d7ae8 100%); color: #fff; }
+        .content-slide { background: #f6f7fb; color: #0f172a; }
+        .timeline-slide { background: linear-gradient(135deg, #0d1f3d 0%, #1a2a51 100%); color: #f8fbff; }
+        .quiz-slide { background: linear-gradient(135deg, #0f3b60 0%, #1e5f8d 100%); color: #fff; }
+        .discussion-slide { background: linear-gradient(135deg, #0f6d67 0%, #0a3f52 100%); color: #fff; }
+        .conclusion-slide { background: linear-gradient(135deg, #fe7abd 0%, #8d81ff 100%); color: #fff; }
+
+        h1 {
+            font-size: clamp(3rem, 3vw + 1.8rem, 6rem);
+            line-height: 1.12;
+            margin-bottom: 1.1rem;
+            letter-spacing: -0.06em;
+            font-weight: 800;
         }
 
-        .card-dark {
-            background: rgba(0, 0, 0, 0.1);
-            border-color: rgba(0, 0, 0, 0.2);
-            color: #333;
+        h2 {
+            font-size: clamp(2.5rem, 2vw + 1.5rem, 4.2rem);
+            line-height: 1.15;
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.04em;
+            font-weight: 800;
         }
 
-        .card-dark:hover {
-            background: rgba(0, 0, 0, 0.15);
+        h3 {
+            font-size: clamp(1.8rem, 1vw + 1.3rem, 3rem);
+            line-height: 1.2;
+            margin-bottom: 0.9rem;
+            font-weight: 700;
+        }
+
+        p, li {
+            font-size: clamp(1.2rem, 0.8vw + 0.9rem, 2rem);
+            line-height: 1.7;
+        }
+
+        .subtitle {
+            font-size: clamp(1.5rem, 0.8vw + 1rem, 2.8rem);
+            line-height: 1.4;
+            opacity: 0.96;
+        }
+
+        .centered { text-align: center; }
+        .left { text-align: left; }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1.02fr 1.2fr;
+            gap: clamp(24px, 3vw, 64px);
+            align-items: center;
+            width: 100%;
+        }
+
+        .illustration {
+            font-size: clamp(5rem, 4vw + 2rem, 12rem);
+            line-height: 1;
+            text-align: center;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(240px, 1fr));
+            gap: clamp(16px, 1.4vw, 28px);
+            width: 100%;
+            margin-top: 1.25rem;
+        }
+
+        .card {
+            background: rgba(15, 23, 42, 0.08);
+            border: 2px solid rgba(15, 23, 42, 0.12);
+            border-radius: 18px;
+            min-height: 230px;
+            padding: 26px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
+        }
+
+        .quiz-slide .card,
+        .quiz-slide .quiz-option,
+        .timeline-slide .card,
+        .discussion-slide .card {
+            box-shadow: none;
         }
 
         .card-title {
-            font-size: 1.6em;
-            font-weight: 700;
-            margin-bottom: 20px;
+            font-size: clamp(1.2rem, 0.9vw + 0.9rem, 2rem);
+            font-weight: 800;
+            margin-top: 14px;
+            margin-bottom: 10px;
         }
 
         .card-content {
-            font-size: 1.3em;
-            opacity: 0.95;
-            line-height: 1.6;
+            font-size: clamp(1rem, 0.7vw + 0.7rem, 1.5rem);
+            line-height: 1.55;
         }
 
-        /* Timeline */
-        .timeline-mini {
-            width: 100%;
-            margin: 40px 0;
+        .icon {
+            font-size: clamp(2.6rem, 1.5vw + 2rem, 5rem);
+            line-height: 1;
         }
 
-        .timeline-item-slide {
-            display: flex;
-            margin: 30px 0;
-            gap: 30px;
-            align-items: flex-start;
-        }
-
-        .timeline-year-badge {
-            background: rgba(255, 255, 255, 0.25);
-            padding: 18px 30px;
-            border-radius: 50px;
-            font-weight: 700;
-            min-width: 120px;
-            text-align: center;
-            flex-shrink: 0;
-            font-size: 1.4em;
-        }
-
-        .timeline-text {
-            flex: 1;
-            text-align: left;
-        }
-
-        .timeline-title {
-            font-weight: 700;
-            margin-bottom: 10px;
-            font-size: 1.5em;
-        }
-
-        .timeline-description {
-            opacity: 0.9;
-            font-size: 1.2em;
-        }
-
-        /* Quiz */
-        .quiz-question {
-            font-size: 2.2em;
-            font-weight: 600;
-            margin-bottom: 50px;
-            text-align: center;
-            line-height: 1.4;
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            max-width: 1000px;
-            margin: 0 auto 40px;
-            width: 100%;
-        }
-
-        .quiz-option {
-            padding: 35px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            cursor: pointer;
-            background: rgba(255, 255, 255, 0.1);
-            transition: all 0.3s;
-            color: white;
-            font-size: 1.4em;
-            font-weight: 500;
-            text-align: center;
-            line-height: 1.5;
-            min-height: 140px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .quiz-option:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: scale(1.05);
-        }
-
-        .quiz-option.selected {
-            background: rgba(255, 255, 255, 0.3);
-            border-color: white;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-        }
-
-        .quiz-option.correct {
-            background: #4ade80;
-            border-color: white;
-            box-shadow: 0 0 20px rgba(74, 222, 128, 0.5);
-        }
-
-        .quiz-option.incorrect {
-            background: #ef4444;
-            border-color: white;
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
-        }
-
-        .quiz-feedback {
-            font-size: 1.6em;
-            font-weight: 600;
-            margin-top: 30px;
-            opacity: 0;
-            animation: fadeIn 0.5s ease forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Key Points */
         .highlight-section {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 40px;
-            border-radius: 20px;
-            border-left: 8px solid rgba(255, 255, 255, 0.5);
-            margin: 40px 0;
-            text-align: left;
-            max-width: 1100px;
-            backdrop-filter: blur(10px);
+            margin-top: 1.5rem;
+            padding: clamp(18px, 2vw, 34px);
+            background: rgba(15, 23, 42, 0.06);
+            border-left: 6px solid rgba(114, 88, 255, 0.8);
+            border-radius: 18px;
         }
 
         .highlight-title {
-            font-weight: 700;
-            font-size: 1.6em;
-            margin-bottom: 25px;
+            font-size: clamp(1.4rem, 1vw + 0.9rem, 2.3rem);
+            font-weight: 800;
+            margin-bottom: 14px;
         }
 
-        .highlight-list {
-            list-style: none;
-            padding-left: 0;
-        }
-
+        .highlight-list { list-style: none; }
         .highlight-list li {
-            margin: 18px 0;
-            padding-left: 40px;
             position: relative;
-            font-size: 1.4em;
-            line-height: 1.6;
+            padding-left: 1.6em;
+            margin: 0.65em 0;
         }
-
         .highlight-list li::before {
             content: "→";
             position: absolute;
             left: 0;
-            font-weight: bold;
-            opacity: 0.8;
-            font-size: 1.2em;
+            font-weight: 800;
+            color: #5b54d7;
         }
 
-        /* Controls */
-        .controls {
-            position: fixed;
-            bottom: 50px;
-            left: 50%;
-            transform: translateX(-50%);
+        .flow-diagram {
             display: flex;
-            gap: 25px;
-            z-index: 1000;
+            flex-direction: column;
             align-items: center;
+            gap: 18px;
+            margin: 1.8rem 0;
+        }
+        .flow-box {
+            width: min(540px, 100%);
+            padding: 20px 26px;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.12);
+            border: 2px solid rgba(255,255,255,0.18);
+            text-align: center;
+            font-size: clamp(1.25rem, 0.8vw + 0.9rem, 2rem);
+            font-weight: 700;
+        }
+        .flow-arrow {
+            font-size: clamp(1.7rem, 1vw + 1.2rem, 2.8rem);
         }
 
-        .control-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 2em;
-            transition: all 0.3s;
+        .timeline-item-slide {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 22px;
+            align-items: start;
+            margin: 18px 0;
+        }
+
+        .timeline-year-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 56px;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.14);
+            border: 1px solid rgba(255,255,255,0.2);
+            font-weight: 800;
+            font-size: clamp(1rem, 0.7vw + 0.7rem, 1.5rem);
+        }
+
+        .timeline-title {
+            font-size: clamp(1.3rem, 0.7vw + 1rem, 2rem);
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .timeline-description {
+            font-size: clamp(1.05rem, 0.7vw + 0.8rem, 1.6rem);
+            line-height: 1.5;
+            opacity: 0.92;
+        }
+
+        .quiz-question {
+            font-size: clamp(1.6rem, 1.2vw + 1.2rem, 3rem);
+            line-height: 1.35;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(240px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .quiz-option {
+            min-height: 120px;
             display: flex;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(10px);
+            text-align: center;
+            padding: 18px 20px;
+            border-radius: 16px;
+            border: 3px solid rgba(255,255,255,0.22);
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            font-size: clamp(1.08rem, 0.7vw + 0.8rem, 1.7rem);
+            font-weight: 620;
+            line-height: 1.4;
+            cursor: pointer;
+            transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
         }
 
-        .control-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: scale(1.1);
+        .quiz-option:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.5); }
+        .quiz-option.selected { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.8); }
+        .quiz-option.correct { background: rgba(34,197,94,0.85); }
+        .quiz-option.incorrect { background: rgba(239,68,68,0.8); }
+
+        .quiz-feedback {
+            min-height: 2em;
+            margin-top: 1rem;
+            font-size: clamp(1.05rem, 0.8vw + 0.8rem, 1.8rem);
+            font-weight: 700;
+            color: #eaffef;
         }
 
-        .control-btn:active {
-            transform: scale(0.95);
+        .controls {
+            position: fixed;
+            left: 50%;
+            bottom: 28px;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 50;
+        }
+
+        .control-btn {
+            width: 66px;
+            height: 66px;
+            border-radius: 50%;
+            border: 3px solid rgba(255,255,255,0.28);
+            background: rgba(20, 30, 52, 0.65);
+            color: #fff;
+            font-size: 2.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.18);
         }
 
         .slide-counter {
-            background: rgba(255, 255, 255, 0.2);
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-weight: 600;
-            backdrop-filter: blur(10px);
-            font-size: 1.5em;
+            min-width: 120px;
+            text-align: center;
+            padding: 12px 20px;
+            border-radius: 999px;
+            background: rgba(20,30,52,0.62);
+            color: #fff;
+            font-size: clamp(1rem, 0.7vw + 0.7rem, 1.5rem);
+            font-weight: 700;
+            border: 2px solid rgba(255,255,255,0.18);
         }
 
-        /* Progress bar */
         .progress-bar {
             position: fixed;
             top: 0;
             left: 0;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
             width: 100%;
-            z-index: 999;
+            height: 6px;
+            background: rgba(255,255,255,0.08);
+            z-index: 100;
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #4ade80 0%, #60a5fa 50%, #a78bfa 100%);
             width: 0%;
-            transition: width 0.3s ease;
+            background: linear-gradient(90deg, #69f0ae 0%, #7da8ff 50%, #d89cff 100%);
+            transition: width 0.25s ease;
         }
 
-        /* Keyboard hints */
         .keyboard-hint {
             position: fixed;
-            top: 30px;
-            right: 30px;
-            font-size: 1.3em;
-            color: rgba(255, 255, 255, 0.8);
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px 25px;
-            border-radius: 30px;
-            z-index: 1000;
-            font-weight: 500;
+            right: 24px;
+            top: 18px;
+            z-index: 50;
+            background: rgba(17, 24, 39, 0.64);
+            color: #fff;
+            border-radius: 999px;
+            padding: 12px 20px;
+            font-size: clamp(0.9rem, 0.4vw + 0.7rem, 1.2rem);
+            border: 1px solid rgba(255,255,255,0.12);
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .slide {
-                padding: 40px 20px;
-            }
-
-            h1 {
-                font-size: 2.2em;
-            }
-
-            h2 {
-                font-size: 1.8em;
-            }
-
-            p {
-                font-size: 1.1em;
-            }
-
-            .two-column {
-                grid-template-columns: 1fr;
-            }
-
-            .illustration {
-                font-size: 80px;
-            }
-
-            .options-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .controls {
-                bottom: 20px;
-            }
-
-            .keyboard-hint {
-                display: none;
-            }
+        @media (max-width: 980px) {
+            .slide { padding: 40px 24px 86px; }
+            .two-column, .options-grid, .card-grid { grid-template-columns: 1fr; }
+            .timeline-item-slide { grid-template-columns: 1fr; }
+            .controls { bottom: 14px; gap: 12px; }
+            .slide-counter { min-width: 96px; }
         }
     </style>
 </head>
 <body>
-    <div class="progress-bar">
-        <div class="progress-fill" id="progressFill"></div>
-    </div>
+    <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+    <div class="keyboard-hint">← → or Arrow keys to navigate</div>
 
-    <div class="keyboard-hint">
-        ← → or ARROW KEYS to navigate
-    </div>
-
-    <!-- SLIDE 1: Title Slide -->
     <div class="slide title-slide active">
-        <div class="slide-content">
+        <div class="slide-content centered">
             <div class="illustration">🤖</div>
             <h1>What AI Is</h1>
             <p class="subtitle">Where It Came From, and What It Does Today</p>
-            <p style="margin-top: 80px; font-size: 1.6em; opacity: 0.9;">Unit 0: An Interactive Journey Into Artificial Intelligence</p>
-            <div style="margin-top: 100px; font-size: 1.4em; opacity: 0.8;">
-                <p>← Use arrow keys or click buttons to navigate →</p>
-            </div>
+            <p style="margin-top: 30px; font-size: clamp(1.2rem, 0.9vw + 0.8rem, 2rem); opacity: 0.95;">Unit 0: An Interactive Journey Into Artificial Intelligence</p>
         </div>
     </div>
 
-    <!-- SLIDE 2: You Already Use AI -->
     <div class="slide content-slide">
         <div class="slide-content left-align">
             <h2>You Already Use AI Every Day</h2>
             <div class="two-column">
-                <div class="column-visual">
-                    <div class="illustration">📍🚗</div>
-                </div>
-                <div class="column-text">
+                <div class="illustration">📍🚗</div>
+                <div>
                     <p>Open a navigation app. Type a destination. A route appears in seconds.</p>
-                    <p>It accounts for <strong style="color: #667eea;">traffic</strong>, <strong style="color: #667eea;">road closures</strong>, and the <strong style="color: #667eea;">way you drive</strong>.</p>
-                    <p style="font-size: 2em; color: #667eea; font-weight: 700; margin-top: 40px;">That's AI, running several kinds at once.</p>
+                    <p>It accounts for <strong style="color:#5b54d7;">traffic</strong>, <strong style="color:#5b54d7;">road closures</strong>, and the <strong style="color:#5b54d7;">way you drive</strong>.</p>
+                    <p style="color:#5b54d7; font-weight:800; margin-top: 22px; font-size: clamp(1.4rem, 1vw + 1rem, 2.2rem);">That’s AI, running several kinds at once.</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 3: How Navigation Works -->
     <div class="slide content-slide">
         <div class="slide-content">
-            <h2>What's Happening Under the Hood?</h2>
+            <h2>What’s Happening Under the Hood?</h2>
             <div class="highlight-section">
-                <ul class="highlight-list" style="color: #333;">
-                    <li><strong style="color: #667eea;">Collecting</strong> speed reports from thousands of phones on the road</li>
-                    <li><strong style="color: #667eea;">Building</strong> a live traffic picture in real time</li>
-                    <li><strong style="color: #667eea;">Running</strong> an algorithm to compare possible routes</li>
-                    <li><strong style="color: #667eea;">Predicting</strong> the fastest route based on patterns</li>
-                    <li><strong style="color: #667eea;">Learning</strong> your habits to suggest your usual route</li>
+                <ul class="highlight-list">
+                    <li><strong>Collecting</strong> speed reports from thousands of phones on the road</li>
+                    <li><strong>Building</strong> a live traffic picture in real time</li>
+                    <li><strong>Running</strong> an algorithm to compare possible routes</li>
+                    <li><strong>Predicting</strong> the fastest route based on patterns</li>
+                    <li><strong>Learning</strong> your habits to suggest your usual route</li>
                 </ul>
             </div>
-            <p style="margin-top: 40px; color: #666;">You've watched it reroute you around a crash. You've seen it get the arrival time wrong. This unit gives you the vocabulary to explain what's happening.</p>
+            <p style="margin-top: 24px; color:#475569;">You already know how this app behaves. You’ve watched it reroute you around a crash, and you’ve seen it get the arrival time wrong.</p>
         </div>
     </div>
 
-    <!-- SLIDE 4: Three Key Questions -->
     <div class="slide content-slide">
         <div class="slide-content">
             <h2>Three Questions for Every AI System</h2>
-            <div style="margin-top: 60px;">
-                <div class="card-grid" style="margin-bottom: 40px;">
-                    <div class="card card-dark">
-                        <div class="icon">🔍</div>
-                        <div class="card-title">What patterns does it recognize?</div>
-                    </div>
-                    <div class="card card-dark">
-                        <div class="icon">📚</div>
-                        <div class="card-title">What did it learn from?</div>
-                    </div>
-                    <div class="card card-dark">
-                        <div class="icon">⚡</div>
-                        <div class="card-title">What decision does it make?</div>
-                    </div>
-                </div>
-                <p style="color: #666; margin-top: 40px; font-size: 1.5em;">Keep these three questions in mind for every system you meet in this guide. You'll use them to analyze AI in the real world.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- SLIDE 5: Quiz 1 -->
-    <div class="slide quiz-slide">
-        <div class="slide-content">
-            <h2>Quick Check ✓</h2>
-            <div class="quiz-question">What is one way your navigation app learns from data?</div>
-            <div class="options-grid">
-                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q1')">
-                    It reads your mind to predict your destination
-                </div>
-                <div class="quiz-option" onclick="selectQuizOption(this, 1, 'q1')">
-                    It collects speed reports from thousands of phones
-                </div>
-                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q1')">
-                    It only uses pre-programmed routes
-                </div>
-                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q1')">
-                    It doesn't learn—it's just a lookup table
-                </div>
-            </div>
-            <div id="q1-feedback" class="quiz-feedback"></div>
-        </div>
-    </div>
-
-    <!-- SLIDE 6: AI Hierarchy -->
-    <div class="slide content-slide">
-        <div class="slide-content">
-            <h2>Understanding the Hierarchy</h2>
-            <div class="flow-diagram" style="margin: 60px 0; flex-direction: column;">
-                <div class="flow-box" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; min-width: 350px; font-size: 1.5em;">
-                    <strong>Artificial Intelligence (AI)</strong>
-                    <div style="font-size: 1em; margin-top: 15px; opacity: 0.9; line-height: 1.4;">Any system that does work we associate with human thinking</div>
-                </div>
-                <div class="flow-arrow" style="color: white;">↓</div>
-                <div class="flow-box" style="background: linear-gradient(135deg, #f093fb, #f5576c); color: white; min-width: 350px; font-size: 1.5em;">
-                    <strong>Machine Learning (ML)</strong>
-                    <div style="font-size: 1em; margin-top: 15px; opacity: 0.9; line-height: 1.4;">Systems that learn patterns from data</div>
-                </div>
-                <div class="flow-arrow" style="color: white;">↓</div>
-                <div class="flow-box" style="background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; min-width: 350px; font-size: 1.5em;">
-                    <strong>Deep Learning</strong>
-                    <div style="font-size: 1em; margin-top: 15px; opacity: 0.9; line-height: 1.4;">Neural networks with many layers</div>
-                </div>
-            </div>
-            <p style="color: #666; margin-top: 40px; text-align: center; font-size: 1.5em;"><strong>Every deep learning system is ML. Every ML system is AI. But not all AI is ML.</strong></p>
-        </div>
-    </div>
-
-    <!-- SLIDE 7: Key Terms -->
-    <div class="slide content-slide">
-        <div class="slide-content">
-            <h2>Three Terms You'll Use Constantly</h2>
-            <div class="card-grid" style="margin-top: 50px;">
-                <div class="card card-dark">
-                    <div class="icon">⚙️</div>
-                    <div class="card-title">Algorithm</div>
-                    <div class="card-content">The set of steps the system follows to learn or make decisions</div>
-                </div>
-                <div class="card card-dark">
-                    <div class="icon">📊</div>
-                    <div class="card-title">Training Data</div>
-                    <div class="card-content">The examples the system learns from</div>
-                </div>
-                <div class="card card-dark">
-                    <div class="icon">🧠</div>
-                    <div class="card-title">Model</div>
-                    <div class="card-content">The learned pattern the system uses on new cases</div>
-                </div>
-            </div>
-            <div class="highlight-section" style="margin-top: 40px;">
-                <div class="highlight-title">Example: How a Spam Filter Works</div>
-                <ul class="highlight-list" style="color: #333;">
-                    <li><strong style="color: #667eea;">Training Data:</strong> Thousands of emails marked spam or not spam</li>
-                    <li><strong style="color: #667eea;">Algorithm:</strong> Finds patterns like phrases, links, unknown senders</li>
-                    <li><strong style="color: #667eea;">Model:</strong> Scores new emails and decides where they go</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <!-- SLIDE 8: Quiz 2 -->
-    <div class="slide quiz-slide">
-        <div class="slide-content">
-            <h2>Quick Check ✓</h2>
-            <div class="quiz-question">A face unlock system would be classified as:</div>
-            <div class="options-grid">
-                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q2')">
-                    Only AI, not machine learning
-                </div>
-                <div class="quiz-option" onclick="selectQuizOption(this, 1, 'q2')">
-                    Deep learning (so it's also ML and AI)
-                </div>
-                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q2')">
-                    ML but not deep learning
-                </div>
-                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q2')">
-                    None of the above
-                </div>
-            </div>
-            <div id="q2-feedback" class="quiz-feedback"></div>
-        </div>
-    </div>
-
-    <!-- SLIDE 9: How AI Reasons -->
-    <div class="slide content-slide">
-        <div class="slide-content">
-            <h2>How AI Reasons: Three Approaches</h2>
-            <div class="card-grid" style="margin-top: 50px;">
-                <div class="card card-dark">
-                    <div class="icon">📋</div>
-                    <div class="card-title">Symbolic AI</div>
-                    <div class="card-content">Follows rules written by people. Easy to check, but breaks when cases don't match the rules.</div>
-                </div>
-                <div class="card card-dark">
-                    <div class="icon">🎓</div>
-                    <div class="card-title">Machine Learning</div>
-                    <div class="card-content">Learns rules from data. Can handle new situations the rules didn't anticipate.</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SLIDE 10: Types of Machine Learning -->
-    <div class="slide content-slide">
-        <div class="slide-content">
-            <h2>Three Types of Machine Learning</h2>
-            <div class="card-grid" style="margin-top: 50px;">
-                <div class="card card-dark">
-                    <div class="icon">✅</div>
-                    <div class="card-title">Supervised</div>
-                    <div class="card-content">Learns from labeled examples (spam/not spam)</div>
-                </div>
-                <div class="card card-dark">
-                    <div class="icon">🔍</div>
-                    <div class="card-title">Unsupervised</div>
-                    <div class="card-content">Finds patterns in unlabeled data on its own</div>
-                </div>
-                <div class="card card-dark">
-                    <div class="icon">🎮</div>
-                    <div class="card-title">Reinforcement</div>
-                    <div class="card-content">Learns through trial and error with rewards</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SLIDE 11: What AI Does -->
-    <div class="slide content-slide">
-        <div class="slide-content">
-            <h2>What AI Does: Four Categories</h2>
-            <div class="card-grid" style="margin-top: 50px;">
-                <div class="card card-dark">
-                    <div class="icon">💬</div>
-                    <div class="card-title">Natural Language Processing</div>
-                    <div class="card-content">Translation, chatbots, sentiment analysis</div>
-                </div>
-                <div class="card card-dark">
-                    <div class="icon">👁️</div>
-                    <div class="card-title">Computer Vision</div>
-                    <div class="card-content">Face unlock, medical imaging, object detection</div>
-                </div>
-                <div class="card card-dark">
-                    <div class="icon">🤖</div>
-                    <div class="card-title">Robotics</div>
-                    <div class="card-content">Warehouse robots, surgical assistants, drones</div>
-                </div>
-                <div class="card card-dark">
-                    <div class="icon">⭐</div>
-                    <div class="card-title">Recommendation Systems</div>
-                    <div class="card-content">Netflix suggestions, shopping, social media</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SLIDE 12: AI History Timeline -->
-    <div class="slide timeline-slide">
-        <div class="slide-content">
-            <h2>AI Through the Decades</h2>
-            <div style="text-align: left; max-width: 1100px; margin: 50px auto;">
-                <div class="timeline-item-slide">
-                    <div class="timeline-year-badge">1950</div>
-                    <div class="timeline-text">
-                        <div class="timeline-title">The Turing Test</div>
-                        <div class="timeline-description">Can a machine hold a conversation you can't tell apart from a person's?</div>
-                    </div>
-                </div>
-
-                <div class="timeline-item-slide">
-                    <div class="timeline-year-badge">1956</div>
-                    <div class="timeline-text">
-                        <div class="timeline-title">Birth of AI</div>
-                        <div class="timeline-description">The term "artificial intelligence" is coined at Dartmouth</div>
-                    </div>
-                </div>
-
-                <div class="timeline-item-slide">
-                    <div class="timeline-year-badge">60s-70s</div>
-                    <div class="timeline-text">
-                        <div class="timeline-title">Early Wins & Promises</div>
-                        <div class="timeline-description">Checkers programs learn, ELIZA imitates therapists. Hype builds.</div>
-                    </div>
-                </div>
-
-                <div class="timeline-item-slide">
-                    <div class="timeline-year-badge">1974-80</div>
-                    <div class="timeline-text">
-                        <div class="timeline-title">❄️ First AI Winter</div>
-                        <div class="timeline-description">Promises unmet, funding cuts. Programs can't handle language or common sense.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SLIDE 13: AI History Continued -->
-    <div class="slide timeline-slide">
-        <div class="slide-content">
-            <h2>AI Through the Decades (Continued)</h2>
-            <div style="text-align: left; max-width: 1100px; margin: 50px auto;">
-                <div class="timeline-item-slide">
-                    <div class="timeline-year-badge">1980s</div>
-                    <div class="timeline-text">
-                        <div class="timeline-title">Expert Systems Boom</div>
-                        <div class="timeline-description">Rule-based systems capture specialist knowledge. AI becomes a business.</div>
-                    </div>
-                </div>
-
-                <div class="timeline-item-slide">
-                    <div class="timeline-year-badge">1987-93</div>
-                    <div class="timeline-text">
-                        <div class="timeline-title">❄️ Second AI Winter</div>
-                        <div class="timeline-description">Expert systems are expensive, hard to update, and can't learn. Hand-written rules hit a ceiling.</div>
-                    </div>
-                </div>
-
-                <div class="timeline-item-slide">
-                    <div class="timeline-year-badge">1997</div>
-                    <div class="timeline-text">
-                        <div class="timeline-title">Deep Blue Defeats Kasparov</div>
-                        <div class="timeline-description">IBM's AI beats the world chess champion. A breakthrough in narrow AI.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SLIDE 14: Modern AI Era -->
-    <div class="slide timeline-slide">
-        <div class="slide-content">
-            <h2>The Modern AI Era</h2>
-            <div style="text-align: left; max-width: 1100px; margin: 50px auto;">
-                <div class="timeline-item-slide">
-                    <div class="timeline-year-badge">2012</div>
-                    <div class="timeline-text">
-                        <div class="timeline-title">Deep Learning Revolution</div>
-                        <div class="timeline-description">AlexNet wins image recognition by a wide margin. GPUs + data = power.</div>
-                    </div>
-                </div>
-
-                <div class="timeline-item-slide">
-                    <div class="timeline-year-badge">2016</div>
-                    <div class="timeline-text">
-                        <div class="timeline-title">AlphaGo Beats Lee Sedol</div>
-                        <div class="timeline-description">DeepMind's AI masters Go—a game experts thought would take 10 more years.</div>
-                    </div>
-                </div>
-
-                <div class="timeline-item-slide">
-                    <div class="timeline-year-badge">2017</div>
-                    <div class="timeline-text">
-                        <div class="timeline-title">The Transformer</div>
-                        <div class="timeline-description">Google researchers publish a foundation for today's large language models.</div>
-                    </div>
-                </div>
-
-                <div class="timeline-item-slide">
-                    <div class="timeline-year-badge">2022</div>
-                    <div class="timeline-text">
-                        <div class="timeline-title">ChatGPT Goes Public</div>
-                        <div class="timeline-description">GenAI reaches millions in weeks. AI becomes mainstream.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SLIDE 15: The Shift -->
-    <div class="slide content-slide">
-        <div class="slide-content">
-            <h2>What Changed?</h2>
-            <div class="two-column" style="margin-top: 60px;">
-                <div style="text-align: center;">
-                    <div style="font-size: 3.5em; margin-bottom: 30px;">❌</div>
-                    <h3 style="color: #666; font-size: 2em;">Early AI</h3>
-                    <p style="color: #666; font-size: 1.5em;">Write intelligence down as rules</p>
-                    <p style="color: #999; font-size: 1.3em; line-height: 1.5;">Breaks when cases don't match rules</p>
-                </div>
-                <div style="text-align: center;">
-                    <div style="font-size: 3.5em; margin-bottom: 30px;">✅</div>
-                    <h3 style="color: #667eea; font-size: 2em;">Modern AI</h3>
-                    <p style="color: #667eea; font-size: 1.5em;"><strong>Learn from data</strong></p>
-                    <p style="color: #999; font-size: 1.3em; line-height: 1.5;">Adapts to new patterns</p>
-                </div>
-            </div>
-            <div class="highlight-section" style="margin-top: 60px; text-align: center;">
-                <div class="highlight-title">Why Now?</div>
-                <p style="color: #333; font-size: 1.5em;">This shift only worked once computers got <strong style="color: #667eea;">fast enough</strong> and data got <strong style="color: #667eea;">big enough</strong>.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- SLIDE 16: Quiz 3 -->
-    <div class="slide quiz-slide">
-        <div class="slide-content">
-            <h2>Quick Check ✓</h2>
-            <div class="quiz-question">What major change happened between AI winters and today?</div>
-            <div class="options-grid">
-                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q3')">
-                    AI became cheaper
-                </div>
-                <div class="quiz-option" onclick="selectQuizOption(this, 1, 'q3')">
-                    Shifted from rules to learning from data
-                </div>
-                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q3')">
-                    AI stopped making mistakes
-                </div>
-                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q3')">
-                    Computers got cheaper
-                </div>
-            </div>
-            <div id="q3-feedback" class="quiz-feedback"></div>
-        </div>
-    </div>
-
-    <!-- SLIDE 17: Narrow vs General AI -->
-    <div class="slide content-slide">
-        <div class="slide-content">
-            <h2>Narrow AI vs General AI</h2>
-            <div class="two-column" style="margin-top: 60px;">
-                <div style="text-align: center;">
-                    <div style="font-size: 3.5em; margin-bottom: 30px;">🎯</div>
-                    <h3 style="color: #667eea; font-size: 2em;">Narrow AI</h3>
-                    <p style="color: #333; font-size: 1.5em;"><strong>Every AI today</strong></p>
-                    <ul style="text-align: left; color: #666; margin: 30px 0; font-size: 1.3em; line-height: 1.6;">
-                        <li>✓ Built for specific tasks</li>
-                        <li>✓ Excellent at one thing</li>
-                        <li>✗ Useless outside that boundary</li>
-                        <li>✓ Face unlock, navigation, spam filters</li>
-                    </ul>
-                </div>
-                <div style="text-align: center;">
-                    <div style="font-size: 3.5em; margin-bottom: 30px; opacity: 0.5;">❓</div>
-                    <h3 style="color: #999; font-size: 2em;">General AI</h3>
-                    <p style="color: #999; font-size: 1.5em;"><strong>Doesn't exist yet</strong></p>
-                    <ul style="text-align: left; color: #999; margin: 30px 0; font-size: 1.3em; line-height: 1.6;">
-                        <li>→ Would learn across any field</li>
-                        <li>→ Could handle any intellectual task</li>
-                        <li>→ Would think like humans do</li>
-                        <li>→ Researchers disagree if/when it will happen</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SLIDE 18: GenAI Complication -->
-    <div class="slide content-slide">
-        <div class="slide-content">
-            <h2>The GenAI Plot Twist</h2>
-            <p style="font-size: 1.8em; margin-bottom: 40px; color: #667eea;"><strong>ChatGPT can write emails, explain taxes, debug code...</strong></p>
-            <p style="font-size: 1.5em; margin-bottom: 30px; color: #666;">Looks general, right? Not quite.</p>
-            <div class="highlight-section">
-                <div class="highlight-title">GenAI Still Fails in Human Ways</div>
-                <ul class="highlight-list" style="color: #333;">
-                    <li><strong style="color: #667eea;">Invents sources</strong> that don't exist</li>
-                    <li><strong style="color: #667eea;">Forgets</strong> simple facts within a conversation</li>
-                    <li><strong style="color: #667eea;">Can't verify</strong> its work against reality</li>
-                    <li><strong style="color: #667eea;">Doesn't know</strong> when it's wrong</li>
-                </ul>
-            </div>
-            <p style="margin-top: 40px; color: #667eea; font-size: 1.6em; font-weight: 600;">Breadth ≠ General Intelligence</p>
-        </div>
-    </div>
-
-    <!-- SLIDE 19: Quiz 4 -->
-    <div class="slide quiz-slide">
-        <div class="slide-content">
-            <h2>Quick Check ✓</h2>
-            <div class="quiz-question">A chatbot that writes, explains taxes, and debugs code is:</div>
-            <div class="options-grid">
-                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q4')">
-                    General AI (because it does multiple tasks)
-                </div>
-                <div class="quiz-option" onclick="selectQuizOption(this, 1, 'q4')">
-                    Still narrow AI (fails in ways humans wouldn't)
-                </div>
-                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q4')">
-                    A perfect replacement for humans
-                </div>
-                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q4')">
-                    Neither intelligent nor AI
-                </div>
-            </div>
-            <div id="q4-feedback" class="quiz-feedback"></div>
-        </div>
-    </div>
-
-    <!-- SLIDE 20: AI Technologies Today -->
-    <div class="slide content-slide">
-        <div class="slide-content">
-            <h2>AI Technologies Today</h2>
-            <p style="color: #666; margin-bottom: 40px; font-size: 1.5em;">Three drivers: <strong>Faster hardware</strong>, <strong>Better algorithms</strong>, <strong>More data</strong></p>
-            <div class="card-grid" style="margin-top: 40px;">
-                <div class="card card-dark">
-                    <div class="icon">💬</div>
-                    <div class="card-title">LLMs</div>
-                    <div class="card-content">Engines of GenAI chatbots. Learn from text, generate word by word.</div>
-                </div>
-                <div class="card card-dark">
-                    <div class="icon">👁️</div>
-                    <div class="card-title">Computer Vision</div>
-                    <div class="card-content">Reads medical scans, inspects parts, guides robots and vehicles.</div>
-                </div>
-                <div class="card card-dark">
-                    <div class="icon">🎨</div>
-                    <div class="card-title">GenAI</div>
-                    <div class="card-content">Creates new content. Images from text, music, code from descriptions.</div>
-                </div>
-                <div class="card card-dark">
-                    <div class="icon">🚗</div>
-                    <div class="card-title">Autonomous Systems</div>
-                    <div class="card-content">Sense, decide, act. Self-driving cars, delivery robots, drones.</div>
-                </div>
-                <div class="card card-dark">
-                    <div class="icon">🎮</div>
-                    <div class="card-title">Reinforcement Learning</div>
-                    <div class="card-content">Learns by trying, getting rewards and penalties. RLHF makes chatbots better.</div>
-                </div>
-                <div class="card card-dark">
-                    <div class="icon">⚙️</div>
-                    <div class="card-title">NLP</div>
-                    <div class="card-content">Handles tone, context, meaning. Translation, assistants, moderation.</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SLIDE 21: Key Takeaways -->
-    <div class="slide content-slide">
-        <div class="slide-content">
-            <h2>Key Takeaways</h2>
-            <div class="highlight-section" style="margin-top: 50px;">
-                <ul class="highlight-list" style="color: #333;">
-                    <li>You use AI every day—navigation, face unlock, spam filters, recommendations</li>
-                    <li>AI is a broad field: symbolic rules, machine learning, and deep learning</li>
-                    <li>Modern AI learns from data, not hand-written rules</li>
-                    <li>History shows cycles: hype → failure → new approach → breakthrough</li>
-                    <li>All today's AI is <strong style="color: #667eea;">narrow</strong>—excellent at one task, useless outside it</li>
-                    <li>GenAI looks general but still fails in ways humans wouldn't</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <!-- SLIDE 22: Three Key Questions Recap -->
-    <div class="slide content-slide">
-        <div class="slide-content">
-            <h2>Remember: Three Key Questions</h2>
-            <div class="card-grid" style="margin-top: 60px; margin-bottom: 60px;">
-                <div class="card card-dark">
+            <div class="card-grid">
+                <div class="card">
                     <div class="icon">🔍</div>
                     <div class="card-title">What patterns does it recognize?</div>
                 </div>
-                <div class="card card-dark">
+                <div class="card">
                     <div class="icon">📚</div>
                     <div class="card-title">What did it learn from?</div>
                 </div>
-                <div class="card card-dark">
+                <div class="card">
                     <div class="icon">⚡</div>
                     <div class="card-title">What decision does it make?</div>
                 </div>
             </div>
-            <p style="color: #666; font-size: 1.5em; text-align: center;"><strong>Use these to analyze every AI system you encounter.</strong></p>
         </div>
     </div>
 
-    <!-- SLIDE 23: Discussion Preparation -->
-    <div class="slide discussion-slide">
+    <div class="slide quiz-slide">
         <div class="slide-content">
-            <h2>Your Next Step: Discussion 0</h2>
-            <div class="highlight-section" style="background: rgba(255, 255, 255, 0.2); margin-top: 50px;">
-                <div class="highlight-title">Find an article about AI and analyze it:</div>
-                <ul class="highlight-list" style="color: white; margin-top: 20px; font-size: 1.3em;">
-                    <li><strong>What kind of AI?</strong> Symbolic, ML, or deep learning?</li>
-                    <li><strong>What did it learn from?</strong> What's the training data?</li>
-                    <li><strong>Narrow or general?</strong> Does the article hype it up?</li>
-                    <li><strong>Apply the three questions.</strong> Patterns, training, decision?</li>
+            <h2>Quick Check</h2>
+            <div class="quiz-question">What is one way your navigation app learns from data?</div>
+            <div class="options-grid">
+                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q1')">It reads your mind to predict your destination</div>
+                <div class="quiz-option" onclick="selectQuizOption(this, 1, 'q1')">It collects speed reports from thousands of phones</div>
+                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q1')">It only uses pre-programmed routes</div>
+                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q1')">It doesn’t learn—it’s just a lookup table</div>
+            </div>
+            <div class="quiz-feedback" id="q1-feedback"></div>
+        </div>
+    </div>
+
+    <div class="slide content-slide">
+        <div class="slide-content">
+            <h2>Understanding the Hierarchy</h2>
+            <div class="flow-diagram">
+                <div class="flow-box" style="background: linear-gradient(135deg,#5164d8,#7c4ecb); color:#fff;">Artificial Intelligence (AI)</div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-box" style="background: linear-gradient(135deg,#dd7be6,#d16290); color:#fff;">Machine Learning (ML)</div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-box" style="background: linear-gradient(135deg,#5dc4ff,#51b3ff); color:#fff;">Deep Learning</div>
+            </div>
+            <p style="text-align:center; color:#475569; margin-top:10px;">Every deep learning system is ML. Every ML system is AI. But not all AI is ML.</p>
+        </div>
+    </div>
+
+    <div class="slide content-slide">
+        <div class="slide-content">
+            <h2>Three Terms You’ll Use Constantly</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="icon">⚙️</div>
+                    <div class="card-title">Algorithm</div>
+                    <div class="card-content">The set of steps the system follows to learn or decide.</div>
+                </div>
+                <div class="card">
+                    <div class="icon">📊</div>
+                    <div class="card-title">Training Data</div>
+                    <div class="card-content">The examples the system learns from.</div>
+                </div>
+                <div class="card">
+                    <div class="icon">🧠</div>
+                    <div class="card-title">Model</div>
+                    <div class="card-content">The learned pattern the system uses on new cases.</div>
+                </div>
+            </div>
+            <div class="highlight-section">
+                <div class="highlight-title">Example: Spam Filter</div>
+                <ul class="highlight-list">
+                    <li><strong>Training Data:</strong> Thousands of emails marked spam or not spam</li>
+                    <li><strong>Algorithm:</strong> Finds patterns like certain phrases, suspicious links, or unknown senders</li>
+                    <li><strong>Model:</strong> Scores a new email and decides where it goes</li>
                 </ul>
             </div>
-            <p style="margin-top: 50px; font-size: 1.8em; font-weight: 600;">Come to class Tuesday ready to explain in 2 minutes.</p>
         </div>
     </div>
 
-    <!-- SLIDE 24: Closing Slide -->
-    <div class="slide conclusion-slide">
+    <div class="slide quiz-slide">
         <div class="slide-content">
-            <div class="illustration" style="font-size: 180px;">🌟</div>
-            <h1 style="margin-top: 40px;">You Now Speak AI</h1>
-            <p class="subtitle" style="font-size: 1.8em; margin-top: 30px;">You have the vocabulary to explain what's happening in the AI systems you use every day.</p>
-            <p style="margin-top: 50px; font-size: 1.6em; opacity: 0.95;">Ready to dive deeper in Unit 1? Let's test the limits of what these systems can do.</p>
-            <div style="margin-top: 100px; font-size: 1.4em; opacity: 0.9;">
-                <p>🎉 Great job completing Unit 0!</p>
+            <h2>Quick Check</h2>
+            <div class="quiz-question">A face unlock system would be classified as:</div>
+            <div class="options-grid">
+                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q2')">Only AI, not machine learning</div>
+                <div class="quiz-option" onclick="selectQuizOption(this, 1, 'q2')">Deep learning (so it’s also ML and AI)</div>
+                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q2')">ML but not deep learning</div>
+                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q2')">None of the above</div>
+            </div>
+            <div class="quiz-feedback" id="q2-feedback"></div>
+        </div>
+    </div>
+
+    <div class="slide content-slide">
+        <div class="slide-content">
+            <h2>How AI Reasons</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="icon">📋</div>
+                    <div class="card-title">Symbolic AI</div>
+                    <div class="card-content">Follows rules written by people. Easy to check, but breaks when a case isn’t covered.</div>
+                </div>
+                <div class="card">
+                    <div class="icon">🎓</div>
+                    <div class="card-title">Machine Learning</div>
+                    <div class="card-content">Learns patterns from data instead of following a fixed rule list.</div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Controls -->
+    <div class="slide content-slide">
+        <div class="slide-content">
+            <h2>Three Types of Machine Learning</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="icon">✅</div>
+                    <div class="card-title">Supervised</div>
+                    <div class="card-content">Learns from labeled examples such as spam/not spam.</div>
+                </div>
+                <div class="card">
+                    <div class="icon">🔍</div>
+                    <div class="card-title">Unsupervised</div>
+                    <div class="card-content">Finds patterns in unlabeled data without a prewritten group label.</div>
+                </div>
+                <div class="card">
+                    <div class="icon">🎮</div>
+                    <div class="card-title">Reinforcement</div>
+                    <div class="card-content">Learns from rewards and penalties after trial and error.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide content-slide">
+        <div class="slide-content">
+            <h2>What AI Does</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="icon">💬</div>
+                    <div class="card-title">NLP</div>
+                    <div class="card-content">Translation, chatbots, and language understanding.</div>
+                </div>
+                <div class="card">
+                    <div class="icon">👁️</div>
+                    <div class="card-title">Computer Vision</div>
+                    <div class="card-content">Face unlock, object detection, and image analysis.</div>
+                </div>
+                <div class="card">
+                    <div class="icon">🤖</div>
+                    <div class="card-title">Robotics</div>
+                    <div class="card-content">Warehouse robots, drones, and physical-world automation.</div>
+                </div>
+                <div class="card">
+                    <div class="icon">⭐</div>
+                    <div class="card-title">Recommendation</div>
+                    <div class="card-content">Platform suggestions, streaming, and shopping recommendations.</div>
+                </div>
+                <div class="card">
+                    <div class="icon">🎨</div>
+                    <div class="card-title">Generative AI</div>
+                    <div class="card-content">Creates new images, text, code, and other content.</div>
+                </div>
+                <div class="card">
+                    <div class="icon">🚗</div>
+                    <div class="card-title">Autonomous Systems</div>
+                    <div class="card-content">Sense, decide, and act in the physical world.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide timeline-slide">
+        <div class="slide-content">
+            <h2>AI Through the Decades</h2>
+            <div style="margin-top: 18px;">
+                <div class="timeline-item-slide">
+                    <div class="timeline-year-badge">1950</div>
+                    <div>
+                        <div class="timeline-title">The Turing Test</div>
+                        <div class="timeline-description">Alan Turing proposes a test for machine conversation.</div>
+                    </div>
+                </div>
+                <div class="timeline-item-slide">
+                    <div class="timeline-year-badge">1956</div>
+                    <div>
+                        <div class="timeline-title">Birth of AI</div>
+                        <div class="timeline-description">The term “artificial intelligence” is coined at Dartmouth.</div>
+                    </div>
+                </div>
+                <div class="timeline-item-slide">
+                    <div class="timeline-year-badge">1974–80</div>
+                    <div>
+                        <div class="timeline-title">First AI Winter</div>
+                        <div class="timeline-description">Hype outpaces capability, and funding dries up.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide timeline-slide">
+        <div class="slide-content">
+            <h2>AI Through the Decades</h2>
+            <div style="margin-top: 18px;">
+                <div class="timeline-item-slide">
+                    <div class="timeline-year-badge">1980s</div>
+                    <div>
+                        <div class="timeline-title">Expert Systems Boom</div>
+                        <div class="timeline-description">Rule-based systems capture business knowledge and become profitable.</div>
+                    </div>
+                </div>
+                <div class="timeline-item-slide">
+                    <div class="timeline-year-badge">1987–93</div>
+                    <div>
+                        <div class="timeline-title">Second AI Winter</div>
+                        <div class="timeline-description">Rules prove hard to maintain, update, and scale.</div>
+                    </div>
+                </div>
+                <div class="timeline-item-slide">
+                    <div class="timeline-year-badge">1997</div>
+                    <div>
+                        <div class="timeline-title">Deep Blue</div>
+                        <div class="timeline-description">IBM’s chess system beats Garry Kasparov.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide timeline-slide">
+        <div class="slide-content">
+            <h2>The Modern AI Era</h2>
+            <div style="margin-top: 18px;">
+                <div class="timeline-item-slide">
+                    <div class="timeline-year-badge">2012</div>
+                    <div>
+                        <div class="timeline-title">Deep Learning Breakthrough</div>
+                        <div class="timeline-description">AlexNet wins the image recognition challenge by a wide margin.</div>
+                    </div>
+                </div>
+                <div class="timeline-item-slide">
+                    <div class="timeline-year-badge">2016</div>
+                    <div>
+                        <div class="timeline-title">AlphaGo</div>
+                        <div class="timeline-description">DeepMind’s system defeats Lee Sedol in Go.</div>
+                    </div>
+                </div>
+                <div class="timeline-item-slide">
+                    <div class="timeline-year-badge">2017</div>
+                    <div>
+                        <div class="timeline-title">Transformer</div>
+                        <div class="timeline-description">The model design behind today’s large language models.</div>
+                    </div>
+                </div>
+                <div class="timeline-item-slide">
+                    <div class="timeline-year-badge">2022</div>
+                    <div>
+                        <div class="timeline-title">ChatGPT</div>
+                        <div class="timeline-description">Generative AI reaches the public in a major way.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide content-slide">
+        <div class="slide-content">
+            <h2>What Changed?</h2>
+            <div class="two-column" style="margin-top: 20px;">
+                <div>
+                    <div class="illustration">❌</div>
+                    <h3>Early AI</h3>
+                    <p>Write intelligence down as rules.</p>
+                </div>
+                <div>
+                    <div class="illustration">✅</div>
+                    <h3>Modern AI</h3>
+                    <p>Learn from data and improve with examples.</p>
+                </div>
+            </div>
+            <div class="highlight-section">
+                <div class="highlight-title">Why now?</div>
+                <p>It worked once computers got faster and data got much bigger.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide quiz-slide">
+        <div class="slide-content">
+            <h2>Quick Check</h2>
+            <div class="quiz-question">What major change happened between AI winters and the current AI boom?</div>
+            <div class="options-grid">
+                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q3')">AI became cheaper</div>
+                <div class="quiz-option" onclick="selectQuizOption(this, 1, 'q3')">AI shifted from rules to learning from data</div>
+                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q3')">AI stopped making mistakes</div>
+                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q3')">Computers got cheaper</div>
+            </div>
+            <div class="quiz-feedback" id="q3-feedback"></div>
+        </div>
+    </div>
+
+    <div class="slide content-slide">
+        <div class="slide-content">
+            <h2>Narrow AI vs General AI</h2>
+            <div class="two-column" style="margin-top: 18px;">
+                <div>
+                    <div class="illustration">🎯</div>
+                    <h3>Narrow AI</h3>
+                    <ul class="highlight-list">
+                        <li>Built for one task or a small set of related tasks</li>
+                        <li>Excellent inside its boundary</li>
+                        <li>Useless outside that boundary</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="illustration">❓</div>
+                    <h3>General AI</h3>
+                    <ul class="highlight-list">
+                        <li>Would learn all kinds of tasks</li>
+                        <li>Would act like a human across many fields</li>
+                        <li>Does not exist yet</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide content-slide">
+        <div class="slide-content">
+            <h2>The GenAI Plot Twist</h2>
+            <p>ChatGPT can write emails, explain taxes, and debug code. It looks broad—but it still fails in ways a person would not.</p>
+            <div class="highlight-section">
+                <div class="highlight-title">GenAI still fails in real ways</div>
+                <ul class="highlight-list">
+                    <li>Invents sources that do not exist</li>
+                    <li>Forgets simple facts during a conversation</li>
+                    <li>Cannot reliably check its own work against reality</li>
+                </ul>
+            </div>
+            <p style="margin-top: 22px; color:#5b54d7; font-weight:800;">Breadth is not the same as general intelligence.</p>
+        </div>
+    </div>
+
+    <div class="slide quiz-slide">
+        <div class="slide-content">
+            <h2>Quick Check</h2>
+            <div class="quiz-question">A chatbot that writes emails, explains taxes, and debugs code is:</div>
+            <div class="options-grid">
+                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q4')">General AI because it does multiple tasks</div>
+                <div class="quiz-option" onclick="selectQuizOption(this, 1, 'q4')">Still narrow AI because it can fail in ways humans would not</div>
+                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q4')">A perfect replacement for humans</div>
+                <div class="quiz-option" onclick="selectQuizOption(this, 0, 'q4')">Neither intelligent nor AI</div>
+            </div>
+            <div class="quiz-feedback" id="q4-feedback"></div>
+        </div>
+    </div>
+
+    <div class="slide content-slide">
+        <div class="slide-content">
+            <h2>AI Technologies Today</h2>
+            <div class="card-grid" style="margin-top: 24px;">
+                <div class="card">
+                    <div class="icon">💬</div>
+                    <div class="card-title">LLMs</div>
+                    <div class="card-content">Large language models power modern chatbots.</div>
+                </div>
+                <div class="card">
+                    <div class="icon">👁️</div>
+                    <div class="card-title">Computer Vision</div>
+                    <div class="card-content">Reads scans, detects objects, and tracks images.</div>
+                </div>
+                <div class="card">
+                    <div class="icon">🎨</div>
+                    <div class="card-title">GenAI</div>
+                    <div class="card-content">Creates new content from prompts and data.</div>
+                </div>
+                <div class="card">
+                    <div class="icon">🎮</div>
+                    <div class="card-title">Reinforcement Learning</div>
+                    <div class="card-content">Learns from rewards and penalties.</div>
+                </div>
+                <div class="card">
+                    <div class="icon">🚗</div>
+                    <div class="card-title">Autonomous Systems</div>
+                    <div class="card-content">Sense, decide, and act in real environments.</div>
+                </div>
+                <div class="card">
+                    <div class="icon">⚙️</div>
+                    <div class="card-title">NLP</div>
+                    <div class="card-content">Understands tone, context, and meaning in language.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide content-slide">
+        <div class="slide-content">
+            <h2>Key Takeaways</h2>
+            <div class="highlight-section">
+                <ul class="highlight-list">
+                    <li>You use AI every day in navigation, recommendations, email, and more.</li>
+                    <li>AI is a broad field: symbolic rules, machine learning, and deep learning.</li>
+                    <li>Modern AI learns from data instead of just following written rules.</li>
+                    <li>History shows cycles of hype, setbacks, and new breakthroughs.</li>
+                    <li>Today’s AI is narrow: excellent at one task, limited beyond it.</li>
+                    <li>GenAI looks broad, but it still fails in ways humans would not.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide content-slide">
+        <div class="slide-content">
+            <h2>Remember: Three Key Questions</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="icon">🔍</div>
+                    <div class="card-title">What patterns does it recognize?</div>
+                </div>
+                <div class="card">
+                    <div class="icon">📚</div>
+                    <div class="card-title">What did it learn from?</div>
+                </div>
+                <div class="card">
+                    <div class="icon">⚡</div>
+                    <div class="card-title">What decision does it make?</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide discussion-slide">
+        <div class="slide-content">
+            <h2>Discussion 0</h2>
+            <div class="highlight-section" style="background: rgba(255,255,255,0.12); border-left-color: rgba(255,255,255,0.8);">
+                <div class="highlight-title">Prepare an article analysis</div>
+                <ul class="highlight-list" style="color: #fff;">
+                    <li>What kind of AI does the article describe?</li>
+                    <li>What did the system learn from?</li>
+                    <li>Is it narrow AI or something more?</li>
+                    <li>Apply the three key questions</li>
+                </ul>
+            </div>
+            <p style="margin-top: 26px; font-weight:700;">Come to class Tuesday ready to explain it in two minutes.</p>
+        </div>
+    </div>
+
+    <div class="slide conclusion-slide">
+        <div class="slide-content centered">
+            <div class="illustration">🌟</div>
+            <h1>You Now Speak AI</h1>
+            <p class="subtitle">You have the vocabulary to explain what AI is doing in the systems you use every day.</p>
+        </div>
+    </div>
+
     <div class="controls">
-        <button class="control-btn" onclick="previousSlide()" title="Previous slide">←</button>
-        <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">24</span></span>
-        <button class="control-btn" onclick="nextSlide()" title="Next slide">→</button>
+        <button class="control-btn" onclick="previousSlide()">←</button>
+        <div class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">24</span></div>
+        <button class="control-btn" onclick="nextSlide()">→</button>
     </div>
 
     <script>
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
+        const slides = Array.from(document.querySelectorAll('.slide'));
         const totalSlides = slides.length;
+        let currentSlideIndex = 0;
 
-        // Update slide counter
-        function updateCounter() {
-            document.getElementById('currentSlide').textContent = currentSlide + 1;
-            document.getElementById('totalSlides').textContent = totalSlides;
-            updateProgress();
+        function updateSlideCounter() {
+            document.getElementById('currentSlide').textContent = String(currentSlideIndex + 1);
+            document.getElementById('totalSlides').textContent = String(totalSlides);
+            document.getElementById('progressFill').style.width = ((currentSlideIndex + 1) / totalSlides * 100) + '%';
         }
 
-        function updateProgress() {
-            const progress = ((currentSlide + 1) / totalSlides) * 100;
-            document.getElementById('progressFill').style.width = progress + '%';
-        }
+        function showSlide(index) {
+            if (index < 0) index = 0;
+            if (index >= totalSlides) index = totalSlides - 1;
+            currentSlideIndex = index;
 
-        function showSlide(n) {
-            // Remove active class from all slides
-            slides.forEach(slide => {
-                slide.classList.remove('active', 'prev');
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === currentSlideIndex);
+                slide.classList.toggle('prev', i < currentSlideIndex);
             });
 
-            // Show current slide
-            if (n >= totalSlides) {
-                currentSlide = totalSlides - 1;
-            } else if (n < 0) {
-                currentSlide = 0;
-            } else {
-                currentSlide = n;
-            }
-
-            slides[currentSlide].classList.add('active');
-            updateCounter();
+            updateSlideCounter();
         }
 
-        function nextSlide() {
-            showSlide(currentSlide + 1);
-        }
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function previousSlide() { showSlide(currentSlideIndex - 1); }
 
-        function previousSlide() {
-            showSlide(currentSlide - 1);
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') nextSlide();
-            if (e.key === 'ArrowLeft') previousSlide();
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight' || event.key === 'PageDown') nextSlide();
+            if (event.key === 'ArrowLeft' || event.key === 'PageUp') previousSlide();
         });
 
-        // Quiz functionality
         function selectQuizOption(element, isCorrect, quizId) {
-            const feedback = document.getElementById(`${quizId}-feedback`);
-            
-            // Remove selected class from siblings
-            element.parentElement.querySelectorAll('.quiz-option').forEach(opt => {
+            const feedback = document.getElementById(quizId + '-feedback');
+            const options = element.parentElement.querySelectorAll('.quiz-option');
+            options.forEach(opt => {
                 opt.classList.remove('selected', 'correct', 'incorrect');
             });
-
-            // Mark selection
             element.classList.add('selected');
-            
-            // Show feedback
-            if (isCorrect === 1) {
+            if (isCorrect) {
                 element.classList.add('correct');
-                feedback.textContent = '✓ Correct! Great thinking.';
-                feedback.style.color = '#4ade80';
+                feedback.textContent = '✓ Correct! Great work.';
+                feedback.style.color = '#d1fae5';
             } else {
                 element.classList.add('incorrect');
-                feedback.textContent = '← Try another option or move forward.';
-                feedback.style.color = '#fca5a5';
+                feedback.textContent = 'Try another option or move on.';
+                feedback.style.color = '#fee2e2';
             }
         }
 
-        // Initialize
         showSlide(0);
     </script>
 </body>
