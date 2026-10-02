@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 0: What AI Is, Where It Came From, and What It Does Today</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: white;
+            padding: 40px 20px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            font-style: italic;
+        }
+
+        section {
+            background: white;
+            margin-bottom: 30px;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #764ba2;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+            color: #444;
+        }
+
+        .highlight-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .key-question {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+
+        /* Glossary Cards */
+        .glossary-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .glossary-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .glossary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .glossary-card.flipped {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .glossary-term {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .glossary-definition {
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+
+        .flip-hint {
+            font-size: 0.8em;
+            opacity: 0.7;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #667eea;
+        }
+
+        .timeline-item {
+            margin-bottom: 30px;
+            padding-left: 80px;
+            position: relative;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 15px;
+            top: 5px;
+            width: 30px;
+            height: 30px;
+            background: white;
+            border: 3px solid #667eea;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #667eea;
+            font-size: 0.8em;
+        }
+
+        .timeline-item.milestone .timeline-dot {
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            left: 10px;
+        }
+
+        .timeline-content {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 3px solid #764ba2;
+        }
+
+        .timeline-year {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .timeline-description {
+            font-size: 0.95em;
+            color: #666;
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            background: #e8f4f8;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .quiz-title {
+            color: #17a2b8;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            padding: 12px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .option input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #e8f4ff;
+        }
+
+        .option.correct {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .option.incorrect {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 5px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Button Styles */
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Discussion Section */
+        .discussion-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+
+        .discussion-section h2 {
+            border-bottom-color: white;
+            color: white;
+        }
+
+        .discussion-prompt {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid white;
+        }
+
+        .discussion-prompt strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            margin-top: 40px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.4em;
+            }
+
+            section {
+                padding: 25px;
+            }
+
+            .glossary-container {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                padding-left: 70px;
+            }
+
+            .timeline-dot {
+                left: 5px;
+                width: 25px;
+                height: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Unit 0: What AI Is, Where It Came From, and What It Does Today</h1>
+            <p class="subtitle">An Interactive Guide to Understanding Artificial Intelligence</p>
+        </header>
+
+        <!-- Section 1: You Already Use AI Every Day -->
+        <section id="section1">
+            <h2>1. You Already Use AI Every Day</h2>
+            
+            <h3>Think About Navigation Apps</h3>
+            <p>Open a navigation app, type a destination, and a route appears in seconds. It accounts for traffic, road closures, and sometimes the way you usually drive. That app is AI, and it runs several kinds at once.</p>
+
+            <div class="highlight-box">
+                <strong>What's happening under the hood:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Collecting speed reports from thousands of phones on the road</li>
+                    <li>Turning that data into a live traffic picture</li>
+                    <li>Running a search algorithm comparing possible routes</li>
+                    <li>Picking the fastest route based on predictions</li>
+                    <li>Learning your habits to suggest your usual route</li>
+                </ul>
+            </div>
+
+            <p>You already know how this app behaves. You've watched it reroute you around a crash, and you've seen it get the arrival time wrong. This unit gives you the vocabulary to explain what's happening underneath.</p>
+
+            <div class="key-question">
+                <strong>Keep these three questions in mind for every system you meet:</strong>
+                <ol style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>What patterns does it recognize?</strong></li>
+                    <li><strong>What did it learn from?</strong></li>
+                    <li><strong>What decision does it make with that?</strong></li>
+                </ol>
+            </div>
+
+            <!-- Quiz 1 -->
+            <div class="quiz-container">
+                <div class="quiz-title">✓ Check Your Understanding</div>
+                <div class="question">
+                    <div class="question-text">What is one way your navigation app learns from data?</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q1" value="a"> It reads your mind to predict where you want to go
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="b"> It collects speed reports from thousands of phones to build a live traffic picture
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="c"> It only uses pre-programmed routes that never change
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="d"> It doesn't learn at all—it's just a simple lookup table
+                        </label>
+                    </div>
+                    <button onclick="checkAnswer('q1', 'b', this)">Submit Answer</button>
+                    <div class="feedback" id="q1-feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Key Terms -->
+        <section id="section2">
+            <h2>2. Key Terms</h2>
+
+            <h3>Understanding the Hierarchy</h3>
+            <p><strong>Artificial intelligence (AI)</strong> is a computer system built to do tasks that normally take human intelligence. Those tasks include solving problems, recognizing speech, interpreting images, making decisions, and translating languages.</p>
+
+            <p>Three terms nest inside each other, and people mix them up constantly. Understanding the difference is crucial:</p>
+
+            <div class="glossary-container">
+                <div class="glossary-card" onclick="flipCard(this)">
+                    <div>
+                        <div class="glossary-term">Artificial Intelligence (AI)</div>
+                        <div class="glossary-definition">The whole field. Any system that does work we associate with human thinking.</div>
+                    </div>
+                    <div class="flip-hint">Click to see example →</div>
+                </div>
+                <div class="glossary-card" onclick="flipCard(this)">
+                    <div>
+                        <div class="glossary-term">Machine Learning (ML)</div>
+                        <div class="glossary-definition">A subset of AI. The system learns patterns from data instead of following rules a person wrote.</div>
+                    </div>
+                    <div class="flip-hint">Click to see example →</div>
+                </div>
+                <div class="glossary-card" onclick="flipCard(this)">
+                    <div>
+                        <div class="glossary-term">Deep Learning</div>
+                        <div class="glossary-definition">A subset of ML. Uses neural networks with many layers to find complex patterns.</div>
+                    </div>
+                    <div class="flip-hint">Click to see example →</div>
+                </div>
+            </div>
+
+            <table>
+                <tr>
+                    <th>Term</th>
+                    <th>What it means</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><strong>Artificial Intelligence</strong></td>
+                    <td>The whole field. Any system that does work we associate with human thinking.</td>
+                    <td>A rule-based tax program, a spam filter, a chatbot</td>
+                </tr>
+                <tr>
+                    <td><strong>Machine Learning (ML)</strong></td>
+                    <td>A subset of AI. The system learns patterns from data instead of following rules a person wrote for every case.</td>
+                    <td>A music app that gets better at picking songs as you listen</td>
+                </tr>
+                <tr>
+                    <td><strong>Deep Learning</strong></td>
+                    <td>A subset of ML. It uses neural networks with many layers to find complex patterns.</td>
+                    <td>Face unlock on your phone, speech-to-text</td>
+                </tr>
+            </table>
+
+            <div class="highlight-box">
+                <strong>Key insight:</strong> Every deep learning system is machine learning, and every machine learning system is AI. <strong>The reverse isn't true.</strong> A system that follows hand-written rules is AI but isn't machine learning.
+            </div>
+
+            <h3>Three Working Terms You'll Use Constantly</h3>
+
+            <table>
+                <tr>
+                    <th>Term</th>
+                    <th>What it means</th>
+                </tr>
+                <tr>
+                    <td><strong>Algorithm</strong></td>
+                    <td>The set of steps the system follows to learn from data or to make a decision.</td>
+                </tr>
+                <tr>
+                    <td><strong>Training Data</strong></td>
+                    <td>The examples the system learns from.</td>
+                </tr>
+                <tr>
+                    <td><strong>Model</strong></td>
+                    <td>What the system ends up with after training. It's the learned pattern the system uses on new cases.</td>
+                </tr>
+            </table>
+
+            <p><strong>Example: How a spam filter works</strong></p>
+            <div class="highlight-box">
+                <ul style="margin-left: 20px;">
+                    <li><strong>Training data:</strong> Thousands of emails already marked spam or not spam</li>
+                    <li><strong>Algorithm:</strong> The system works through those examples and finds patterns—certain phrases, strange links, unknown senders</li>
+                    <li><strong>Model:</strong> The result. When a new email arrives, the model scores it and decides where it goes</li>
+                </ul>
+            </div>
+
+            <!-- Quiz 2 -->
+            <div class="quiz-container">
+                <div class="quiz-title">✓ Check Your Understanding</div>
+                <div class="question">
+                    <div class="question-text">A face unlock system on your phone would be classified as:</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q2" value="a"> Only AI, not machine learning
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="b"> Machine learning, but not deep learning
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="c"> Deep learning, which means it's also ML and AI
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="d"> None of these—it's magic
+                        </label>
+                    </div>
+                    <button onclick="checkAnswer('q2', 'c', this)">Submit Answer</button>
+                    <div class="feedback" id="q2-feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Major Categories of AI Systems -->
+        <section id="section3">
+            <h2>3. Major Categories of AI Systems</h2>
+
+            <p>AI isn't one technology. You can sort any AI system three ways: by how it reasons, by what it does, and by how it's built. A system can fall into several categories at once.</p>
+
+            <h3>By How It Reasons</h3>
+
+            <p><strong>Symbolic AI</strong> (rule-based or classical AI) follows rules that people write. An early medical expert system might say: <em>"If the patient has a fever and a stiff neck, consider meningitis."</em> Rules like that are easy to check, but they break the moment a case comes up that nobody wrote a rule for.</p>
+
+            <p><strong>Machine Learning</strong> learns its rules from data. It comes in three main types:</p>
+
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>How it learns</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><strong>Supervised Learning</strong></td>
+                    <td>From labeled examples, where each example comes with the right answer</td>
+                    <td>A spam filter trained on emails already marked spam or not spam</td>
+                </tr>
+                <tr>
+                    <td><strong>Unsupervised Learning</strong></td>
+                    <td>From unlabeled data. It finds groups and patterns no one pointed out.</td>
+                    <td>A retailer sorting customers into groups it never defined in advance</td>
+                </tr>
+                <tr>
+                    <td><strong>Reinforcement Learning</strong></td>
+                    <td>From trial and error. It gets rewards for good actions and penalties for bad ones.</td>
+                    <td>A program that learns to win a game by playing millions of rounds</td>
+                </tr>
+            </table>
+
+            <div class="key-question">
+                <strong>The loan approval dilemma:</strong> A symbolic system approves a loan because a person wrote the rule, and you can read that rule. A machine learning system approves it because patterns in past loans suggest it, and often no one can point to the exact reason. Which is more trustworthy?
+            </div>
+
+            <h3>By What It Does</h3>
+
+            <table>
+                <tr>
+                    <th>Category</th>
+                    <th>What it works with</th>
+                    <th>Examples</th>
+                </tr>
+                <tr>
+                    <td><strong>Natural Language Processing (NLP)</strong></td>
+                    <td>Human language</td>
+                    <td>Translation apps, virtual assistants, chatbots, sentiment analysis</td>
+                </tr>
+                <tr>
+                    <td><strong>Computer Vision</strong></td>
+                    <td>Images and video</td>
+                    <td>Face unlock, medical image screening, damage detection in aircraft inspection photos</td>
+                </tr>
+                <tr>
+                    <td><strong>Robotics</strong></td>
+                    <td>The physical world</td>
+                    <td>Warehouse robots, surgical assistants, bomb disposal robots</td>
+                </tr>
+                <tr>
+                    <td><strong>Recommendation Systems</strong></td>
+                    <td>Your past choices</td>
+                    <td>Streaming suggestions, online shopping, social media feeds</td>
+                </tr>
+            </table>
+
+            <h3>By How It's Built</h3>
+
+            <div class="highlight-box">
+                <ul style="margin-left: 20px;">
+                    <li><strong>Neural Networks:</strong> Layers of connected nodes, loosely modeled on neurons in the brain. They power most modern AI, including deep learning.</li>
+                    <li><strong>Decision Trees:</strong> Reach an answer through a chain of yes-or-no questions, so you can trace exactly how they decided.</li>
+                    <li><strong>Genetic Algorithms:</strong> Borrow from natural selection. They generate many possible solutions, keep the best, and combine them, round after round. They work well on hard scheduling and design problems.</li>
+                </ul>
+            </div>
+
+            <p><strong>Real systems often mix approaches.</strong> A self-driving car uses computer vision to see the road, machine learning to predict what other drivers will do, and hand-written rules for things that must never change, like stopping at a red light.</p>
+
+            <!-- Quiz 3 -->
+            <div class="quiz-container">
+                <div class="quiz-title">✓ Check Your Understanding</div>
+                <div class="question">
+                    <div class="question-text">Which type of machine learning learns from trial and error with rewards and penalties?</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q3" value="a"> Supervised learning
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="b"> Unsupervised learning
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="c"> Reinforcement learning
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="d"> Symbolic learning
+                        </label>
+                    </div>
+                    <button onclick="checkAnswer('q3', 'c', this)">Submit Answer</button>
+                    <div class="feedback" id="q3-feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: AI History Timeline -->
+        <section id="section4">
+            <h2>4. A Short History of AI</h2>
+
+            <p>AI's history runs in cycles. A breakthrough creates excitement, promises outrun results, funding dries up, and then a new approach brings the field back. Knowing that pattern helps you judge today's claims.</p>
+
+            <div class="timeline" id="timeline">
+                <div class="timeline-item milestone">
+                    <div class="timeline-dot">1950</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">1950</div>
+                        <div class="timeline-title">The Turing Test</div>
+                        <div class="timeline-description">Alan Turing proposes a test: can a machine hold a conversation you can't tell apart from a person's? This is the first serious attempt to define machine intelligence.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">55-56</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">1955–1956</div>
+                        <div class="timeline-title">Birth of AI</div>
+                        <div class="timeline-description">John McCarthy and colleagues propose a summer workshop at Dartmouth, coining the term "artificial intelligence." The field gets its name and its founding goal.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">50-60</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">1950s–1960s</div>
+                        <div class="timeline-title">Early Wins</div>
+                        <div class="timeline-description">Arthur Samuel's checkers program learns from experience. The Logic Theorist proves math theorems. ELIZA imitates a therapist in conversation. Early wins spark predictions that human-level AI is only years away.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">❄️</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">1974–1980</div>
+                        <div class="timeline-title">First AI Winter</div>
+                        <div class="timeline-description">Programs fail on language and common sense, and government funding (including DARPA's) is cut back. Hype meets the limits of the era's computers and methods.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">80s</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">1980s</div>
+                        <div class="timeline-title">Expert Systems Boom</div>
+                        <div class="timeline-description">Expert systems capture specialists' knowledge in rules and sell well. Japan launches its Fifth Generation computing project in 1982. AI becomes a business for the first time.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">❄️</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">1987–1993</div>
+                        <div class="timeline-title">Second AI Winter</div>
+                        <div class="timeline-description">Expert systems prove costly to maintain, hard to update, and unable to learn. Hand-written rules hit a ceiling.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item milestone">
+                    <div class="timeline-dot">1997</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">1997</div>
+                        <div class="timeline-title">Deep Blue Defeats Kasparov</div>
+                        <div class="timeline-description">IBM's Deep Blue defeats world chess champion Garry Kasparov. A narrow system beats the best human at one task.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item milestone">
+                    <div class="timeline-dot">2012</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2012</div>
+                        <div class="timeline-title">Deep Learning Revolution</div>
+                        <div class="timeline-description">A neural network called AlexNet wins an image recognition contest by a wide margin. Deep learning takes over, powered by GPUs and huge datasets.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item milestone">
+                    <div class="timeline-dot">2016</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2016</div>
+                        <div class="timeline-title">AlphaGo Beats Lee Sedol</div>
+                        <div class="timeline-description">DeepMind's AlphaGo beats Go champion Lee Sedol in Seoul. A milestone many experts expected to be a decade away.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">2017</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2017</div>
+                        <div class="timeline-title">The Transformer</div>
+                        <div class="timeline-description">Google researchers publish the transformer design. This becomes the foundation of today's large language models.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item milestone">
+                    <div class="timeline-dot">2022</div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2022</div>
+                        <div class="timeline-title">ChatGPT Goes Public</div>
+                        <div class="timeline-description">OpenAI releases ChatGPT. GenAI reaches the public, and millions use it within weeks.</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>What Changed?</h3>
+            <div class="highlight-box">
+                <p><strong>Between the AI winters and today's boom, one crucial shift happened:</strong></p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>Early AI:</strong> Tried to write intelligence down as rules</li>
+                    <li><strong>Modern AI:</strong> Learns from data</li>
+                </ul>
+                <p style="margin-top: 15px;"><em>That shift only worked once computers got fast enough and data got big enough.</em></p>
+            </div>
+
+            <!-- Quiz 4 -->
+            <div class="quiz-container">
+                <div class="quiz-title">✓ Check Your Understanding</div>
+                <div class="question">
+                    <div class="question-text">What major change happened between the AI winters and today's AI boom?</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q4" value="a"> AI became cheaper to develop
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="b"> AI shifted from rule-based systems to learning from data
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="c"> AI became easier to explain
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="d"> AI stopped making mistakes
+                        </label>
+                    </div>
+                    <button onclick="checkAnswer('q4', 'b', this)">Submit Answer</button>
+                    <div class="feedback" id="q4-feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Narrow AI vs General AI -->
+        <section id="section5">
+            <h2>5. Narrow AI and General AI</h2>
+
+            <h3>Narrow AI (Artificial Narrow Intelligence)</h3>
+            <p>Every AI system in use today is <strong>narrow AI.</strong> Artificial narrow intelligence (ANI), also called <strong>weak AI</strong>, is built for one task or a small set of related tasks. It can be excellent inside that boundary and useless outside it.</p>
+
+            <div class="highlight-box">
+                <strong>Example:</strong> The system that reads chest X-rays can't schedule your appointment.
+            </div>
+
+            <p>You use narrow AI constantly:</p>
+            <ul style="margin-left: 20px;">
+                <li>Face unlock</li>
+                <li>Navigation</li>
+                <li>Spam filters</li>
+                <li>Translation apps</li>
+                <li>Voice assistants</li>
+                <li>Fraud detection on your bank card</li>
+            </ul>
+
+            <h3>General AI (Artificial General Intelligence)</h3>
+            <p><strong>Artificial general intelligence (AGI)</strong>, also called <strong>strong AI</strong>, would learn and apply knowledge across any field the way a person does. It could take on any intellectual task a human can. <strong>No such system exists.</strong> Researchers disagree sharply about whether one will, and when.</p>
+
+            <h3>The GenAI Complication</h3>
+            <div class="key-question">
+                <strong>GenAI chatbots complicate the picture.</strong> One chatbot can write an email, explain a tax form, and debug code, which looks general. It still fails in ways a person wouldn't:
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>It invents sources</li>
+                    <li>It loses track of simple facts</li>
+                    <li>It can't check its own work against the real world</li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>Breadth isn't the same as general intelligence.</strong></p>
+            </div>
+
+            <h3>Why This Distinction Matters</h3>
+            <p>When you read the news about AI risk, articles often slide between today's narrow systems and a future AGI without saying so. <strong>Always ask: which one does the writer mean?</strong></p>
+
+            <!-- Quiz 5 -->
+            <div class="quiz-container">
+                <div class="quiz-title">✓ Check Your Understanding</div>
+                <div class="question">
+                    <div class="question-text">A system that can translate languages, write emails, and debug code would be:</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q5" value="a"> Artificial general intelligence (AGI) because it does multiple tasks
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="b"> Still narrow AI, because it can fail in ways humans wouldn't and can't check its own work
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="c"> Neither AI nor intelligent at all
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="d"> A perfect replacement for human thinking
+                        </label>
+                    </div>
+                    <button onclick="checkAnswer('q5', 'b', this)">Submit Answer</button>
+                    <div class="feedback" id="q5-feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: AI Technologies Today -->
+        <section id="section6">
+            <h2>6. AI Technologies Today</h2>
+
+            <p>The technologies from earlier sections have moved fast in the past decade. Three things drove it: <strong>faster hardware, better algorithms, and far more data.</strong></p>
+
+            <table>
+                <tr>
+                    <th>Technology</th>
+                    <th>Where it stands now</th>
+                </tr>
+                <tr>
+                    <td><strong>Large Language Models (LLMs)</strong></td>
+                    <td>The engines behind GenAI chatbots. They learn from huge amounts of text and generate new text one piece at a time.</td>
+                </tr>
+                <tr>
+                    <td><strong>Natural Language Processing</strong></td>
+                    <td>Has moved past keyword matching to handling tone, context, and meaning. Powers assistants, customer service bots, and content moderation.</td>
+                </tr>
+                <tr>
+                    <td><strong>Computer Vision</strong></td>
+                    <td>Goes well beyond labeling a photo. Reads medical scans, inspects parts on assembly lines, and guides drones and vehicles.</td>
+                </tr>
+                <tr>
+                    <td><strong>Reinforcement Learning</strong></td>
+                    <td>Trains systems through rewards. A version called reinforcement learning from human feedback (RLHF) is used to make chatbots more helpful and less harmful.</td>
+                </tr>
+                <tr>
+                    <td><strong>Generative AI (GenAI)</strong></td>
+                    <td>Creates new content instead of only analyzing it. Diffusion models and generative adversarial networks (GANs) produce realistic images from a text description.</td>
+                </tr>
+                <tr>
+                    <td><strong>Autonomous Systems</strong></td>
+                    <td>Sense, decide, and act in the physical world: self-driving cars, delivery robots, and uncrewed aircraft.</td>
+                </tr>
+            </table>
+
+            <div class="highlight-box">
+                <strong>Important:</strong> Each of these tools has limits, and knowing them matters as much as knowing what they can do. You'll test those limits yourself in the next unit.
+            </div>
+
+            <!-- Quiz 6 -->
+            <div class="quiz-container">
+                <div class="quiz-title">✓ Check Your Understanding</div>
+                <div class="question">
+                    <div class="question-text">Which technology powers GenAI chatbots like ChatGPT?</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q6" value="a"> Computer vision
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q6" value="b"> Large language models (LLMs)
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q6" value="c"> Robotics
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q6" value="d"> Symbolic AI
+                        </label>
+                    </div>
+                    <button onclick="checkAnswer('q6', 'b', this)">Submit Answer</button>
+                    <div class="feedback" id="q6-feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Discussion Section -->
+        <section class="discussion-section" id="discussion">
+            <h2>Where This Goes Next</h2>
+            <p>Use this guide in Discussion 0. When you analyze your article, name the kind of AI it describes, what that system learned from, and whether the article treats it as narrow AI or something more.</p>
+
+            <div class="discussion-prompt">
+                <strong>Prepare for class on Tuesday:</strong>
+                <p>You should be ready to explain your analysis in two minutes. Consider:</p>
+            </div>
+
+            <div class="discussion-prompt">
+                <strong>1. What kind of AI does the article describe?</strong>
+                <p>Is it symbolic AI, machine learning, or deep learning? Does it involve NLP, computer vision, or another category?</p>
+            </div>
+
+            <div class="discussion-prompt">
+                <strong>2. What did the system learn from?</strong>
+                <p>What was its training data? Was it supervised, unsupervised, or reinforcement learning?</p>
+            </div>
+
+            <div class="discussion-prompt">
+                <strong>3. Does the article treat it as narrow AI or something more?</strong>
+                <p>Does the writer imply the system is more general or intelligent than it actually is? Are there signs of hype?</p>
+            </div>
+
+            <div class="discussion-prompt">
+                <strong>4. Apply the three questions:</strong>
+                <p>For the AI system in your article:</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>What patterns does it recognize?</li>
+                    <li>What did it learn from?</li>
+                    <li>What decision does it make with that?</li>
+                </ul>
+            </div>
+
+            <div style="margin-top: 30px; padding: 20px; background: rgba(255, 255, 255, 0.1); border-radius: 5px;">
+                <strong>💡 Reflection prompt:</strong>
+                <p style="margin-top: 10px;">Before our discussion, think about which earlier developments on the AI timeline made your system's application possible. How would someone have built this 20 years ago, or would they have been able to?</p>
+            </div>
+        </section>
+
+        <footer>
+            <p>Unit 0: What AI Is, Where It Came From, and What It Does Today | Interactive Lecture</p>
+            <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">Built with interactivity and learning in mind</p>
+        </footer>
+    </div>
+
+    <script>
+        // Progress bar
+        window.addEventListener('scroll', () => {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (window.scrollY / docHeight) * 100;
+            document.getElementById('progressFill').style.width = scrollPercent + '%';
+        });
+
+        // Glossary card flip
+        function flipCard(card) {
+            card.classList.toggle('flipped');
+            const term = card.querySelector('.glossary-term');
+            const definition = card.querySelector('.glossary-definition');
+            const hint = card.querySelector('.flip-hint');
+
+            if (card.classList.contains('flipped')) {
+                const examples = {
+                    'Artificial Intelligence (AI)': 'A rule-based tax program, a spam filter, a chatbot',
+                    'Machine Learning (ML)': 'A music app that gets better at picking songs as you listen',
+                    'Deep Learning': 'Face unlock on your phone, speech-to-text'
+                };
+                definition.textContent = examples[term.textContent] || 'Example not available';
+                hint.textContent = '← Click to flip back';
+            } else {
+                const definitions = {
+                    'Artificial Intelligence (AI)': 'The whole field. Any system that does work we associate with human thinking.',
+                    'Machine Learning (ML)': 'A subset of AI. The system learns patterns from data instead of following rules a person wrote.',
+                    'Deep Learning': 'A subset of ML. Uses neural networks with many layers to find complex patterns.'
+                };
+                definition.textContent = definitions[term.textContent];
+                hint.textContent = 'Click to see example →';
+            }
+        }
+
+        // Quiz functionality
+        function checkAnswer(questionId, correctAnswer, button) {
+            const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+            const feedback = document.getElementById(`${questionId}-feedback`);
+
+            if (!selectedOption) {
+                feedback.textContent = 'Please select an answer first.';
+                feedback.classList.add('show');
+                return;
+            }
+
+            const options = document.querySelectorAll(`input[name="${questionId}"]`);
+            options.forEach(option => {
+                const label = option.parentElement;
+                label.classList.remove('correct', 'incorrect', 'selected');
+                if (option.checked) {
+                    label.classList.add('selected');
+                }
+            });
+
+            if (selectedOption.value === correctAnswer) {
+                feedback.textContent = '✓ Correct! Great work.';
+                feedback.classList.remove('show', 'incorrect');
+                feedback.classList.add('show', 'correct');
+                document.querySelector(`input[name="${questionId}"][value="${correctAnswer}"]`).parentElement.classList.add('correct');
+            } else {
+                feedback.textContent = '✗ Not quite. Try again or move on to see the explanation.';
+                feedback.classList.remove('show', 'correct');
+                feedback.classList.add('show', 'incorrect');
+                document.querySelector(`input[name="${questionId}"][value="${correctAnswer}"]`).parentElement.classList.add('correct');
+                selectedOption.parentElement.classList.add('incorrect');
+            }
+
+            button.textContent = 'Answer Submitted';
+            button.disabled = true;
+        }
+
+        // Smooth scroll for section navigation
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section');
+            sections.forEach((section, index) => {
+                section.setAttribute('data-section', index + 1);
+            });
+        });
+
+        // Optional: Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.quiz-container, .glossary-card, .timeline-item').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
